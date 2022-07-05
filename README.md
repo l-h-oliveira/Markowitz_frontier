@@ -1,3 +1,4 @@
+# Otimização de Portfólios de Markowitz [problemas com LaTex e MarkDown]
 ## Objetivos
 - Recolher dados históricos de dois índices (S&P500 e IBOV) para detectarmos períodos de movimentações abruptas;
 - Escolher 4 ações de empresas pertencentes a cada um dos índices e calcular os retornos ao longo do tempo e as respectivas variâncias;
@@ -77,6 +78,18 @@ Conforme discutimos no Apêndice A, a fronteira eficiente tem a forma de uma hip
 
 $$ \sigma^2 = a\mu^2 + b\mu + c, \textrm{com } a \neq 0.$$
 
-Para obter a curvatura dessa curva, primeiro devemos obter uma parametrização da mesma. Ou seja, duas funções de um mesmo parâmetro, $t$, que fornecem um ponto da curva, $\left( \mu\left(t\right), \sigma\left(t\right)\right)$. Utilizando as funções trigonométricas, podemos definir
+Para obter a curvatura dessa curva, primeiro devemos obter uma **parametrização** da mesma. Ou seja, duas funções de um mesmo parâmetro, $t$, que fornecem um ponto da curva, $\left( \mu\left(t\right), \sigma\left(t\right)\right)$. Utilizando as funções trigonométricas, podemos definir
 
-$$ \begin{cases} \mu(t) = \\ \sigma(t) = \end{cases}$$
+$$ \begin{cases} \mu(t) = \sqrt{\frac{c}{a} - \frac{b^2}{4a^2}}\sinh (t) - \frac{b}{2a} \\ \sigma(t) = \sqrt{c - \frac{b^2}{4a}}\cosh (t)\end{cases}.$$
+
+Sabendo que $\cosh^2 (t) - \sinh^2 (t) = 1$, a equação da fronteira eficiente é naturalmente satisfeita. Temos portanto uma parametrização.
+
+Nosso interesse é agora calcular a **curvatura** ao longo da curva. De forma geral, a expressão é um tanto extensa
+
+$$k(t) = \frac{\mu^\prime\sigma^{\prime\prime} - \mu^{\prime\prime}\sigma^\prime}{\left(\left(\mu^\prime)^2 \right) + \left(\sigma^\prime \right)^2 \right)^{\frac{3}{2}}}, $$
+
+onde $\mu^\prime$ é a primeira derivada de $\mu$ em relação a $t$ e $\mu^{\prime\prime}$ é a segunda derivada em relação a $t$, analogamente para $\sigma^\prime$ e $\sigma^{\prime\prime}$.
+
+Felizmente as derivadas das funções trigonométricas hiperbólicas possuem relações recorrentes. Isto nos permite simplificar enormemente a expressão da curvatura
+
+$$k(t)= \frac{a}{d} \left(\cosh^2(t) + a\sinh^2(t)\right)^{-\frac{3}{2}}.$$
