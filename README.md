@@ -93,3 +93,7 @@ onde $\mu^\prime$ é a primeira derivada de $\mu$ em relação a $t$ e $\mu^{\pr
 Felizmente as derivadas das funções trigonométricas hiperbólicas possuem relações recorrentes. Isto nos permite simplificar enormemente a expressão da curvatura
 
 $$k(t)= \frac{a}{d} \left(\cosh^2(t) + a\sinh^2(t)\right)^{-\frac{3}{2}}.$$
+
+Mais ainda, podemos expressar a curvatura em termos de $\mu$ e $\sigma$
+
+$$k(\mu, \sigma) = \frac{c - \frac{b^2}{4a}}{\left(\sigma^2 + \left(a\mu + \frac{b}{2}\right)^2\right)^{\frac{3}{2}}}.$$
