@@ -1,4 +1,4 @@
-<img src="https://render.githubusercontent.com/render/math?math=e^{i \pi} = -1">
+
 
 # Otimização de Portifólios de Markowitz
 
@@ -52,8 +52,7 @@ Podemos formular dois problemas de otimização. Nos dois casos, o intuito é en
 
 2. Minimizar a variância $ \vec{\alpha}^t \Sigma \vec{\alpha} $ e fixar um retorno $ \alpha_1\mu_1 + \alpha_2\mu_2 + \cdots \alpha_N\mu_N = \mu_0 $.
 
-Nos dois caso, ainda temos $`\alpha_1~+~\alpha_2~+~\cdots~+~\alpha_N~=~1`$.
-
+Nos dois caso, ainda temos <img src="https://render.githubusercontent.com/render/math?math=\alpha_1 + \alpha_2 + \cdots + \alpha_N = 1">.
 
 ## Apêndice B: A Curvatura de uma Hipérbole
 
