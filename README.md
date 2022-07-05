@@ -5,8 +5,8 @@
 - Exibir a fronteira eficiente
 - Calcular a curvatura da fronteira eficiente sobre o portifólio eficiente;
 - A curvatura sobre o portifólio eficiente pode ser útil como indicativo de períodos de mudanças abrubtas?
-- Apêndice A: breve comentário sobre as duas implementações da otimização. A primeira fixa o retorno e minimiza a variância; e a segunda fixa a variância e maximiza o retorno;
-- Apêndice B: curvatura de uma hipérbole
+- Apêndice A (detalhamento matemático): breve comentário sobre as duas implementações da otimização. A primeira fixa o retorno e minimiza a variância; e a segunda fixa a variância e maximiza o retorno;
+- Apêndice B (detalhamento matemático): curvatura de uma hipérbole
 
 ## Dados Histórios S&P500 e IBOV
 
@@ -33,7 +33,7 @@ E a variância? A **variância do portfólio** $(\sigma^2)$ também pode ser esc
 
 $$ \sigma^2 = \vec{\alpha}^t \Sigma \vec{\alpha},$$
 
-onde $\Sigma$ é a **matriz de correlação** entre os ativos. Ela é dada por
+onde $\Sigma$ é a **matriz de correlação** entre os ativos (nessa notação, $\vec{\alpha}$ é um vetor coluna e $\vec{\alpha}^t$ o seu transposto, um vetor linha). Ela é dada por
 
 $$ \Sigma = \begin{pmatrix}\sigma_1^2 & \rho_{12} & \cdots & \rho_{1N} \\ \rho_{12} & \sigma_2^2 & \cdots & \rho_{2N} \\ \vdots & \vdots & \ddots & \vdots \\ \rho_{1N} & \rho_{2N} & \cdots & \sigma_N^2  \end{pmatrix}. $$
 
@@ -50,9 +50,33 @@ Podemos formular dois problemas de otimização. Nos dois casos, o intuito é en
 
 Nos dois caso, ainda temos $\alpha_1~+~\alpha_2~+~\cdots~+~\alpha_N~=~1$.
 
-Vamos nos concentrar no primeiro caso.
+Vamos nos concentrar no segundo caso. Vamos procurar os pontos extremos da seguinte lagrangiana
 
+$$ \mathcal{L} = \frac{1}{2}\vec{\alpha}^t \Sigma \vec{\alpha} + \lambda_1 \left(\mu_0 - \vec{\alpha}^t\mu  \right) + \lambda_2\left(1 - \vec{\alpha}^t\vec{1}\right), $$
+
+onde $\lambda_1$ está relacionado com o vínculo da variância fixada e $\lambda_2$ está relacionado com o vínculo de que as alocações somam $1$ e $\vec{1}$ é o vetor coluna com todos os elementos iguais a $1$. Para isso, calculamos a derivada em relação a $\alpha_k$ e igualamos a zero. A equação obtida é uma componente da seguinte equação vetorial
+$$ \Sigma \vec{\alpha} - \lambda_1 \vec{\mu} - \lambda_2\vec{1} = 0.$$
+
+De onde obtemos
+$$  \vec{\alpha} =  \lambda_1 \Sigma^{-1}\vec{\mu} + \lambda_2\Sigma^{-1}\vec{1} = 0.$$
+
+Resta determinar $\lambda_1$ e $\lambda_2$. Vamos utilizar as equações de vínculo para obter duas equações e resolver os sistema linear.
+
+$$\mu_0 = \vec{\alpha}^t \vec{\mu} = \lambda_1\vec{\mu}^t\Sigma^{-1}\mu + \lambda_2 \vec{\mu}^t\Sigma^{-1}\vec{1} $$
+
+$$1 = \vec{\alpha}^t\vec{1}= \lambda_1 \vec{\mu}^t\Sigma^{-1}\vec{1} + \lambda_2\vec{1}^t\Sigma^{-1}\vec{1}.$$
+
+Na forma matricial,
+$$ \begin{pmatrix}\vec{\mu}^t\Sigma^{-1}\mu & \vec{\mu}^t\Sigma^{-1}\vec{1} \\ \vec{\mu}^t\Sigma^{-1}\vec{1} & \vec{1}^t\Sigma^{-1}\vec{1} \end{pmatrix}\begin{pmatrix} \lambda_1 \\ \lambda_2 \end{pmatrix} = \begin{pmatrix} \mu_0 \\ 1 \end{pmatrix}.$$
+
+Note que se conhecemos $\alpha$ podemos obter a variância do portifólio, $ \sigma^2 = \vec{\alpha}^t \Sigma \vec{\alpha}$, em função de um retorno $\mu_0$ fixado. Dessa forma, obtemos uma curva no plano $\mu \times \sigma$, a **fronteira eficiente**. Pode-se mostrar que essa curva é um hipérbole e que encapsula todos os pontos que representam os ativos que compõem o portfólio.
 
 ## Apêndice B: A Curvatura de uma Hipérbole
 
-$$\sum_{n = 0}^\infty $$
+Conforme discutimos no Apêndice A, a fronteira eficiente tem a forma de uma hipérbole no plano $\mu \times \sigma$, que podemos expressar por
+
+$$ \sigma^2 = a\mu^2 + b\mu + c, \textrm{com } a \neq 0.$$
+
+Para obter a curvatura dessa curva, primeiro devemos obter uma parametrização da mesma. Ou seja, duas funções de um mesmo parâmetro, $t$, que fornecem um ponto da curva, $\left( \mu\left(t\right), \sigma\left(t\right)\right)$. Utilizando as funções trigonométricas, podemos definir
+
+$$ \begin{cases} \mu(t) = \\ \sigma(t) = \end{cases}$$
