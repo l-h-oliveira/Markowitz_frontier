@@ -18,7 +18,7 @@ Abaixo expomos dados históricos do índice Ibovespa (IBOV) e do índice S&P500.
 <img src="indexes.png" 
      style="float: left; margin-left: 10px;" />
 
-Sobre o gráfico, destacamos 4 áreas onde ocorreram mudanças abruptas de preço nos dois índices. A seguir, vamos testar se a curvatura da fronteira eficiente obtida através da otimização de Markowitz expressa algum comportamento relevante nessas regiões.
+Sobre o gráfico, destacamos alguns períodos onde ocorreram mudanças abruptas de preço nos dois índices. A seguir, vamos testar se a curvatura da fronteira eficiente obtida através da otimização de Markowitz expressa algum comportamento relevante nessas regiões.
 
 ## Cestas de Ativos
 
