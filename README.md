@@ -11,10 +11,18 @@
 
 ## Dados Histórios S&P500 e IBOV
 
+Utilizando o pacote yfinance, podemos obter dados históricos de diversos ativos, incluindo índices de bolsas de vários países. 
+
+Abaixo expomos dados históricos do índice Ibovespa (IBOV) e do índice S&P500.
+
 <img src="indexes.png" 
      style="float: left; margin-left: 10px;" />
 
+Sobre o gráfico, destacamos 4 áreas onde ocorreram mudanças abruptas de preço nos dois índices. A seguir, vamos testar se a curvatura da fronteira eficiente obtida através da otimização de Markowitz expressa algum comportamento relevante nessas regiões.
+
 ## Cestas de Ativos
+
+Agora, vamos escolher quatro ativos presentes em cada um dos índices. Vamos exibir gráficos dos retornos de cada um deles e calcular os retornos médios e as variâncias médias.
 
 ### Google, Mycrosoft, Amazon, Meta
 
