@@ -34,7 +34,7 @@ E a variância? A **variância do portfólio** $(\sigma^2)$ também pode ser esc
 
 $$ \sigma^2 = \vec{\alpha}^t \Sigma \vec{\alpha},$$
 
-onde $\Sigma$ é a **matriz de correlação** entre os ativos (nessa notação, $\vec{\alpha}$ é um vetor coluna e $\vec{\alpha}^t$ o seu transposto, um vetor linha). Ela é dada por
+onde $\Sigma$ é a **matriz de correlação** entre os ativos (nessa notação, a alocação $\vec{\alpha}$ é vista como um vetor coluna e $\vec{\alpha}^t$ o seu transposto, um vetor linha). Ela é dada por
 
 $$ \Sigma = \begin{pmatrix}\sigma_1^2 & \rho_{12} & \cdots & \rho_{1N} \\ \rho_{12} & \sigma_2^2 & \cdots & \rho_{2N} \\ \vdots & \vdots & \ddots & \vdots \\ \rho_{1N} & \rho_{2N} & \cdots & \sigma_N^2  \end{pmatrix}. $$
 
@@ -70,7 +70,25 @@ $$1 = \vec{\alpha}^t\vec{1}= \lambda_1 \vec{\mu}^t\Sigma^{-1}\vec{1} + \lambda_2
 Na forma matricial,
 $$ \begin{pmatrix}\vec{\mu}^t\Sigma^{-1}\mu & \vec{\mu}^t\Sigma^{-1}\vec{1} \\ \vec{\mu}^t\Sigma^{-1}\vec{1} & \vec{1}^t\Sigma^{-1}\vec{1} \end{pmatrix}\begin{pmatrix} \lambda_1 \\ \lambda_2 \end{pmatrix} = \begin{pmatrix} \mu_0 \\ 1 \end{pmatrix}.$$
 
-Note que se conhecemos $\alpha$ podemos obter a variância do portifólio, $ \sigma^2 = \vec{\alpha}^t \Sigma \vec{\alpha}$, em função de um retorno $\mu_0$ fixado. Dessa forma, obtemos uma curva no plano $\mu \times \sigma$, a **fronteira eficiente**. Pode-se mostrar que essa curva é um hipérbole e que encapsula todos os pontos que representam os ativos que compõem o portfólio.
+Note que se conhecemos $\alpha$ podemos obter a variância do portifólio, $ \sigma^2 = \vec{\alpha}^t \Sigma \vec{\alpha}$, em função de um retorno $\mu_0$ fixado. Dessa forma, obtemos uma curva no plano $\sigma \times \mu$, a **fronteira eficiente**. Pode-se mostrar que essa curva é um hipérbole e que encapsula todos os pontos que representam os ativos que compõem o portfólio.
+
+Por fim, devemos escolher o ativo com o maior **Sharpe ratio** que é definida como a razão entre diferença do retorno do ativo e do ativo livre de risco e desvio padrão do ativo (o desvio padrão é a raiz quadrada da variância). Então, o Sharpe ratio do ativo $M$ é
+
+$$SR(M) =  \frac{\mu_M - r}{\sigma_M},$$
+
+onde $r$ é o retorno do ativo livre de risco. No Brasil costuma-se utilizar produtos ligados à taxa selic como ativos livres de risco.
+
+Da forma como é definido, o Sharpe ratio nada mais é do que a inclunação de uma reta no plano $\mu \times \sigma$ que passa pelo ponto ativo livre de risco, o ponto $(0, r)$ e pelo ativo $M$, o ponto $(\sigma_M, \mu_M).$ Segue que o ativo otimizado é o ativo da fronteira eficiente com o maior Sharpe ratio, ou seja, é aquele no qual a reta definida pelo Sharpe ratio é tangente à fronteira eficiente. Para encontrá-lo, notamos que devemos ter
+
+$$ \mu^\prime = \frac{\mu - r}{\sigma} \quad \textrm{ com } \quad \sigma^2 = a\mu^2 + b\mu + c.$$
+
+Derivando implicitamente a equação da fronteira eficiente, conseguimos encontrar uma expressão para $\mu^\prime$, e obter duas equações para podermos encontrar o retorno e o desvio padrão do ativo otimizado
+
+$$ \begin{cases}\sigma^2 = a\mu^2 + b\mu + c \\ 2\sigma^2 = 2a\mu^2 + \left(b - 2r a \right)\mu - rb \end{cases}.$$
+
+Resolvendo as equações, encontramos o retorno e a variância do ativo otimizado
+
+$$\mu = -\frac{rb + 2c}{2ra + b} \quad  \textrm{ e } \quad \sigma^2 = \frac{\left(4ac - b^2\right)}{\left(2ra + b \right)^2}\left(ar^2 + br + c \right).$$
 
 ## Apêndice B: A Curvatura de uma Hipérbole
 
