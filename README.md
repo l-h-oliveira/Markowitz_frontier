@@ -11,6 +11,9 @@
 
 ## Dados Histórios S&P500 e IBOV
 
+<img src="indexes.png" 
+     style="float: left; margin-left: 10px;" />
+
 ## Cestas de Ativos
 
 ### Google, Mycrosoft, Amazon, Meta
