@@ -2,6 +2,7 @@
 from matplotlib import ticker
 import numpy as np
 import matplotlib.pyplot as plt
+import seaborn as sns
 import pandas as pd
 import yfinance as yf
 from datetime import datetime as dt
@@ -86,6 +87,54 @@ plt.show()
 fig.savefig('indexes.png')
 
 # %%
+# Agora, vamos calcular o retorno médio e a variância dos retornos de cada um dos índices. Para isso utilizamos as colunas dos retornos já definidas e calculamos o retorno acumulado médio numa janela móvel com período especificado.
+
+period = 50
+
+for x in ['IBOV', 'S&P500']:
+    # Calculando a média dos retornos na janela especificada
+    index_data['mean_r_' + x] = index_data['r_' + x].cumprod().rolling(period).mean()
+
+    # Calculando a variância dos retornos na janela especificada
+    index_data['var_r_' + x] = index_data['r_' + x].cumprod().rolling(period).var()
+
+# %%
+# Plots retornos médios e variâncias dos índices
+
+fig, ax = plt.subplots(nrows = 2, ncols = 1, figsize = (12,6))
+ax[0].plot(index_data.index.values, index_data['mean_r_IBOV'], label = 'IBOV', color = 'blue')
+ax[0].plot(index_data.index.values, index_data['mean_r_S&P500'], label = 'S&P500', color = 'red')
+ax[0].set_ylabel(r'$\mu$')
+ax[0].legend(loc = 'upper left')
+ax[0].set_ylim([0, 3.5])
+ax[0].set_yticks(list(np.arange(0,3.5, 1)))
+
+# Aqui, estamos modificando os valores no eixo x. Queremos que o mínimo ocorra 50 dias antes do primeiro registro no dataframe e o máximo ocorra 50 dias dempois. O mesmo para os dois índices.
+ax[0].set_xlim([np.datetime64(dt(int(str(index_data.index.values[0])[0:4]), int(str(index_data.index.values[0])[5:7]), int(str(index_data.index.values[0])[8:10])) - timedelta(days = 50)), np.datetime64(dt(int(str(index_data.index.values[- 1])[0:4]), int(str(index_data.index.values[-1])[5:7]), int(str(index_data.index.values[-1])[8:10])) + timedelta(days = 50))])
+
+ax[1].plot(index_data.index.values, index_data['var_r_IBOV'], label = 'S&P500', color = 'blue')
+ax[1].plot(index_data.index.values, index_data['var_r_S&P500'], label = 'S&P500', color = 'red')
+ax[1].set_ylabel(r'$\sigma^2$')
+ax[1].set_xlim([np.datetime64(dt(int(str(index_data.index.values[0])[0:4]), int(str(index_data.index.values[0])[5:7]), int(str(index_data.index.values[0])[8:10])) - timedelta(days = 50)), np.datetime64(dt(int(str(index_data.index.values[- 1])[0:4]), int(str(index_data.index.values[-1])[5:7]), int(str(index_data.index.values[-1])[8:10])) + timedelta(days = 50))])
+# ax[1].set_yticks([0, 0.5, 1, 1.5, 2, 2.5, 3])
+# ax[1].set_yticklabels(['0', '','1', '','2', '','3'])
+ax[1].set_xlabel('Ano')
+ax[1].set_ylim([0,0.12])
+ax[1].set_yticks(list(np.arange(0,0.12, 0.03)))
+
+# # Plotando as áreas sombreadas com os períodos de interece
+
+# for i in [0,1]:
+#     for x in [2008, 2015, 2011, 2020]:
+#         ax[i].axvspan(index_data.index.values[np.where(index_data.index.year.values == x)[0][0]], index_data.index.values[np.where(index_data.index.year.values == x)[0][-1]], facecolor = 'gray')
+
+# ax.secondary_yaxis('right', functions = (lambda x: 3*x/8, lambda x: 8*x/3)).set_ylabel('S&P500 (retornos)')
+ax[1].legend(loc = 'upper left')
+plt.subplots_adjust(wspace=0, hspace=0)
+plt.show()
+fig.savefig('mean_and_var_indexes.png')
+
+# %%
 # Vamos selecionar um grupo de empresas brasileiras para fazer a otimização de Markowitz
 my_tickers_temp = ['PETR4','VALE3', 'ITSA4', 'BBDC4']
 
@@ -128,6 +177,56 @@ ax.legend()
 plt.subplots_adjust(wspace = 0, hspace = 0)
 plt.show()
 fig.savefig('brasilian_basket.png')
+
+# %%
+# Vamos calcular os retornos e variâncias de cada uma das ações na cesta brasileira
+
+period = 50
+
+for x in my_tickers:
+    # Calculando a média dos retornos na janela especificada
+    stocks_data['mean_r_' + x] = stocks_data['r_' + x].cumprod().rolling(period).mean()
+
+    # Calculando a variância dos retornos na janela especificada
+    stocks_data['var_r_' + x] = stocks_data['r_' + x].cumprod().rolling(period).var()
+
+# %%
+# Plots dos retornos e variâncias das ações brasileiras
+
+fig, ax = plt.subplots(nrows = 2, ncols = 1, figsize = (12,6))
+for x in my_tickers:
+    ax[0].plot(stocks_data.index.values, stocks_data['mean_r_' + x], label = x[:-3])
+ax[0].set_ylabel(r'$\mu$')
+# ax.set_xticks([])
+ax[0].set_xlim([np.datetime64(dt(int(str(stocks_data.index.values[0])[0:4]), int(str(stocks_data.index.values[0])[5:7]), int(str(stocks_data.index.values[0])[8:10])) - timedelta(days = 50)), np.datetime64(dt(int(str(stocks_data.index.values[- 1])[0:4]), int(str(stocks_data.index.values[-1])[5:7]), int(str(stocks_data.index.values[-1])[8:10])) + timedelta(days = 50))])
+# ax.axvspan(stocks_data.index.values[500], stocks_data.index.values[1200], facecolor='gray')
+# ax[0].set_yticks(list(range(9)))
+# ax[0].set_yticklabels(['0', '', '2', '', '4', '', '6', '',''])
+# ax.set_xlabel('Ano')
+ax[0].legend(loc = 'upper left')
+ax[0].set_yticks(list(np.arange(0,2.5, 0.5)))
+
+for x in my_tickers:
+    ax[1].plot(stocks_data.index.values, stocks_data['var_r_' + x], label = x[:-3])
+ax[1].set_ylabel(r'$\sigma^2$')
+# ax.set_xticks([])
+ax[1].set_xlim([np.datetime64(dt(int(str(stocks_data.index.values[0])[0:4]), int(str(stocks_data.index.values[0])[5:7]), int(str(stocks_data.index.values[0])[8:10])) - timedelta(days = 50)), np.datetime64(dt(int(str(stocks_data.index.values[- 1])[0:4]), int(str(stocks_data.index.values[-1])[5:7]), int(str(stocks_data.index.values[-1])[8:10])) + timedelta(days = 50))])
+# ax.axvspan(stocks_data.index.values[500], stocks_data.index.values[1200], facecolor='gray')
+# ax[0].set_yticks(list(range(9)))
+# ax[0].set_yticklabels(['0', '', '2', '', '4', '', '6', '',''])
+# ax.set_xlabel('Ano')
+ax[1].set_yticks(list(np.arange(0,0.15, 0.03)))
+ax[1].legend(loc = 'upper left')
+plt.subplots_adjust(wspace = 0, hspace = 0)
+plt.show()
+fig.savefig('mean_and_var_brasilian_basket.png')
+
+# %% 
+# O último dado relevante para a otimização de portfólios é a correlação entre as ações. A seguir, obtemos a correlação MÉDIA em todo o período entre as ações.
+
+fig, ax = plt.subplots(nrows = 1, ncols = 1, figsize = (6,5))
+sns.heatmap(stocks_data[my_tickers].corr(), annot = True)
+plt.savefig('corr_br.png')
 
 # %%
 

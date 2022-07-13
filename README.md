@@ -22,26 +22,44 @@ O histórico de preços encontra-se nomalizado pelo respectivo valor máximo alc
 
 Sobre o gráfico, destacamos alguns períodos onde ocorreram mudanças abruptas de preço nos dois índices. A seguir, vamos testar se a curvatura da fronteira eficiente obtida através da otimização de Markowitz expressa algum comportamento relevante nessas regiões.
 
+No gráfico abaixo, vemos o retorno médio de cada índice numa janela de 50 dias úteis (superior); e a variância dos retornos (inferior), na mesma janela de tempo.
+
+<img src="mean_and_var_indexes.png" 
+     style="float: left; margin-left: 10px;" />
+
+
+Podemos observar que o índice S&P500 entregaram um retorno maior que o índice Ibovespa. Além disso, o gráfico da variância atesta que o índice Ibovespa está sujeito a oscilações maiores e mais frequentes que o índice S&P500, como pode ser observado no gráfico dos históricos de preços.
 ## Cestas de Ativos
 
 Agora, vamos escolher quatro ativos presentes em cada um dos índices. Vamos exibir gráficos dos preços de cada um deles e calcular os retornos médios e as variâncias médias.
 
-### Google, Mycrosoft, Amazon, Meta
+### Google, Mycrosoft, Amazon, Coca-Cola
 
-A seguir o histórico de preços normalizados de quatro empresas estadunidenses: Google, Mycrosoft, Amazon e Meta. 
+A seguir o histórico de preços normalizados de quatro empresas estadunidenses: Google, Mycrosoft, Amazon e Coca-Cola. 
 
 <img src="usa_basket.png" 
      style="float: left; margin-left: 10px;" />
 
-### Petrobrás, Vale, Itaú, Bradesco
+### Petrobrás, Vale, Itaúsa, Bradesco
 
-A seguir o histórico de preços normalizados de quatro empresas estadunidenses: Petrobrás, Vale, Amazon e Meta. 
+A seguir o histórico de preços normalizados de quatro empresas estadunidenses: Petrobrás, Vale, Itaúsa e Bradesco. 
 
 <img src="brasilian_basket.png" 
      style="float: left; margin-left: 10px;" />
 
-## Portifólios Otimizados
+No gráfico abaixo, assim como fizemos para os índices, temos os retornos acumulados e as variâncias para as ações na cesta brasileira.
 
+Primeiramente, podemos observar que ação com maior retorno é a da empresa Vale. É também a que possui maior variância. Esta possui um pico muito expressivo em 2020, provavelmente em virtude da oscilação de preços causada pelo rompimento da barragem de Brumadinho.
+
+<img src="mean_and_var_brasilian_basket.png" 
+     style="float: left; margin-left: 10px;" />
+
+Podemos ainda calcular a correlação média entre as ações nas cesta.
+
+<div style="text-align:center"><img src = "corr_br.png" /></div>
+
+## Portifólios Otimizados
+ 
 ## A Fronteira Eficiente e a Curvatura
 
 ## Apêndice A: Otimização de Portifólios de Markowitz
@@ -127,7 +145,7 @@ Sabendo que $\cosh^2 (t) - \sinh^2 (t) = 1$, a equação da fronteira eficiente 
 
 Nosso interesse é agora calcular a **curvatura** ao longo da curva. De forma geral, a expressão é um tanto extensa
 
-$$k(t) = \frac{\mu^\prime\sigma^{\prime\prime} - \mu^{\prime\prime}\sigma^\prime}{\left(\left(\mu^\prime)^2 \right) + \left(\sigma^\prime \right)^2 \right)^{\frac{3}{2}}}, $$
+$$k(t) = \frac{\mu^\prime\sigma^{\prime\prime} - \mu^{\prime\prime}\sigma^\prime}{\left(\left(\mu^\prime\right)^2  + \left(\sigma^\prime \right)^2 \right)^{\frac{3}{2}}}, $$
 
 onde $\mu^\prime$ é a primeira derivada de $\mu$ em relação a $t$ e $\mu^{\prime\prime}$ é a segunda derivada em relação a $t$, analogamente para $\sigma^\prime$ e $\sigma^{\prime\prime}$.
 
