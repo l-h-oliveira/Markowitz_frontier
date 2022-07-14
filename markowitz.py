@@ -229,6 +229,16 @@ sns.heatmap(stocks_data[my_tickers].corr(), annot = True)
 plt.savefig('corr_br.png')
 
 # %%
+# Cálculo das fronteiras eficientes em cada janela de tempo
+
+# Primeiramente, inicializamos três colunas no dataframe que irão armazenar os parâmetros a, b e c que definem a fronteira eficiente.
+
+# Vamos obter a matriz de correlação entre os ativos em cada janela móvel. Entretanto, o método .corr() do pandas com janela móvel utiliza somente o coeficiente de Pearson ( https://en.wikipedia.org/wiki/Pearson_correlation_coefficient ). Para obter as corelações puras, devemos multiplicar pelos desvios-padrão de cada ativo.
+
+temp0 = stocks_data[my_tickers].rolling(period).corr().dropna()
+
+
+# %%
 
 # Vamos selecionar um grupo de empresas norte americanas para fazer a otimização de Markowitz
 my_tickers_temp = ['GOOG', 'MSFT', 'AMZN', 'COKE']
