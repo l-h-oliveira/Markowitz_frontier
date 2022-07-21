@@ -11,6 +11,9 @@ from datetime import timedelta
 # Faz com que o terminal exiba as tabelas no estilo do Jupyther
 from IPython.display import display 
 
+# função para inverter matrizes
+from scipy.linalg import inv
+
 # Configurações matplotlib
 # plt.rc('text', usetex = True)
 # plt.rc('font', **{'family' : "sans-serif"})
@@ -22,10 +25,19 @@ from IPython.display import display
 
 # font2 = {'size': 18}
 
+# cálculo a cruvatura da fronteira eficiente (curvatura de uma hipérbole  parametrizada por funções trigonométricas hiperbólicas)
+def k(a, b, c, r):
+    # 
+    mu = -(r*b + 2*c)/(2*r*a)
+    sigma = (4*a*c - b**2)*(a*r**2 + b*r + c)/(2*r*a + b)**2
+
+    return (c - b**2/(4*a))(sigma**2 + (a*mu + b/2)**2)**(1.5)
+
 # %%
 # Datas de início e fim da análise
 start_date = '2008-01-01'
-end_date = dt.today().strftime('%Y-%m-%d')
+end_date = '2022-05-31'
+# Data de hoje: dt.today().strftime('%Y-%m-%d')
 # %%
 #  Dados do IBOV e do S&P500 para contextualização
 ''' 
@@ -55,7 +67,7 @@ index_data[['r_IBOV', 'r_S&P500']] = index_data/index_data.shift(periods = 1)
 index_data = index_data.dropna(axis = 0)
 
 print('\n Visualizando os dados filtrados')
-display(index_data)
+display(index_data.head())
 
 # %%
 # Agora, vamos gerar os retornos acumulados. Já que nosso retorno é uma razão de preços, devemos calcular os produtos cumulativos (método cumprod do pandas)
@@ -158,7 +170,7 @@ stocks_data[names] = stocks_data/stocks_data.shift(periods = 1)
 stocks_data = stocks_data.dropna(axis = 0)
 
 print('\n Visualizando os dados filtrados (cesta de ações brasileiras)')
-display(stocks_data)
+display(stocks_data.head())
 
 # %%
 # Gráficos dos preços das cestas de ações
@@ -233,9 +245,54 @@ plt.savefig('corr_br.png')
 
 # Primeiramente, inicializamos três colunas no dataframe que irão armazenar os parâmetros a, b e c que definem a fronteira eficiente.
 
+stocks_data[['a', 'b', 'c']] = pd.DataFrame({'a':[], 'b':[], 'c':[]})
+
 # Vamos obter a matriz de correlação entre os ativos em cada janela móvel. Entretanto, o método .corr() do pandas com janela móvel utiliza somente o coeficiente de Pearson ( https://en.wikipedia.org/wiki/Pearson_correlation_coefficient ). Para obter as corelações puras, devemos multiplicar pelos desvios-padrão de cada ativo.
 
 temp0 = stocks_data[my_tickers].rolling(period).corr().dropna()
+
+mean_cols = list(map(lambda x: 'mean_' + x, names))
+var_cols = list(map(lambda x: 'var_' + x, names))
+vec_ones = np.ones((len(var_cols), 1))
+
+for x in stocks_data.index[period - 1:]:
+    # Vetor com os retornos
+    mu = np.matrix(stocks_data.loc[x, mean_cols].values).transpose()
+
+    # Obtendo a matriz de correlações
+    s = np.sqrt(np.matrix(stocks_data.loc[x, var_cols].values))
+    S = np.dot(s.transpose(),s)
+
+    try:
+        inv_corr = inv(np.multiply(np.matrix(temp0.loc[x].values) ,S))
+
+        # Obtendo os parâmetros da fronteira eficiente
+        R11 = (mu.transpose()@inv_corr@mu)[0,0]
+        R12 = (mu.transpose()@inv_corr@vec_ones)[0,0]
+        R22 = (vec_ones.transpose()@inv_corr@vec_ones)[0,0]
+
+        d = R11*R22 - R12**2
+
+        stocks_data.loc[x, ['a', 'b', 'c']] = R22/d, -2*R12/d, R11/d
+    except:
+        # Examinando os registros em que a matriz de correlação é singular ou d = 0 (os únicos problemas que podem emergir aqui)
+        print(x)
+        continue
+
+# Para obtermos o portfólio otimizado em relação ao Sharpe-ratio, precisamos do valor da taxa livre de risco naquele período. Vamos utilizar como de costume, a taxa selic
+
+selic_data = pd.read_csv('consulta_selic_b3.txt', sep='	', decimal=',')
+
+# Transformando as dadas de texto para datetime
+selic_data['Date'] = pd.to_datetime(selic_data['Data'], dayfirst= True, yearfirst=True)
+
+selic_data = selic_data.drop(columns= 'Data')
+
+# Agora, vamos juntar os dados de preço de ações com os dados da taxa selic
+
+full_data = pd.merge(stocks_data, selic_data, on = 'Date', how = 'left')
+
+full_data = full_data.set_index('Date')
 
 
 # %%
@@ -265,7 +322,7 @@ stocks_data[names] = stocks_data/stocks_data.shift(periods = 1)
 stocks_data = stocks_data.dropna(axis = 0)
 
 print('\n Visualizando os dados filtrados (cesta de ações brasileiras)')
-display(stocks_data)
+display(stocks_data.head())
 
 
 
