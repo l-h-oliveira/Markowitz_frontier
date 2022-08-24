@@ -101,7 +101,7 @@ fig.savefig('indexes.png')
 # %%
 # Agora, vamos calcular o retorno médio e a variância dos retornos de cada um dos índices. Para isso utilizamos as colunas dos retornos já definidas e calculamos o retorno acumulado médio numa janela móvel com período especificado.
 
-period = 50
+period = 1000
 
 for x in ['IBOV', 'S&P500']:
     # Calculando a média dos retornos na janela especificada
@@ -281,6 +281,7 @@ for x in stocks_data.index[period - 1:]:
 
 # Para obtermos o portfólio otimizado em relação ao Sharpe-ratio, precisamos do valor da taxa livre de risco naquele período. Vamos utilizar como de costume, a taxa selic
 
+# %%
 selic_data = pd.read_csv('consulta_selic_b3.txt', sep='	', decimal=',')
 
 # Transformando as dadas de texto para datetime
@@ -290,9 +291,114 @@ selic_data = selic_data.drop(columns= 'Data')
 
 # Agora, vamos juntar os dados de preço de ações com os dados da taxa selic
 
-full_data = pd.merge(stocks_data, selic_data, on = 'Date', how = 'left')
+full_data = pd.merge(stocks_data[['a', 'b', 'c']], selic_data, on = 'Date', how = 'left')
 
 full_data = full_data.set_index('Date')
+
+# queremos calcular o retorno da taxa selic ao longo da nossa janela de tempo. Para isso, vamos calcular o produto cumulativo de (1 + x/100) com x sendo o respectivo retorno diário da taxa selic 
+full_data['SELIC_daylly'] = full_data['Taxa SELIC'].apply(lambda x: (1 + x/100)**(1/365))
+
+full_data['r_SELIC'] = full_data['SELIC_daylly'].rolling(window = period).apply(np.prod)
+
+full_data['r_ef'] = -(full_data['r_SELIC']*full_data['b'] + 2*full_data['c'])/(2*full_data['r_SELIC']*full_data['a'] + full_data['b'])
+
+full_data['var_ef'] = (4*full_data['a']*full_data['c'] - full_data['b']**2)*(full_data['a']*full_data['r_SELIC']**2 + full_data['b']*full_data['r_SELIC'] + full_data['c'])/(2*full_data['r_SELIC']*full_data['a'] + full_data['b'])**2
+
+full_data['k'] = (full_data['c'] - full_data['b']**2/full_data['a']/4)/(full_data['var_ef'] + (full_data['a']*full_data['r_ef'] + full_data['b']/2)**2)**(3/2)
+
+full_data = full_data.dropna()
+# %%
+# Plot  curvatura
+# Cesta americana
+fig, ax = plt.subplots(nrows = 1, ncols = 1, figsize = (12,6))
+
+ax.plot(full_data.index.values, np.abs(full_data['k'].values)/500, color = 'blue')
+for x in [2008, 2015, 2011, 2020]:
+        ax.axvspan(index_data.index.values[np.where(index_data.index.year.values == x)[0][0]], index_data.index.values[np.where(index_data.index.year.values == x)[0][-1]], facecolor = 'gray')
+ax.axhline(0.4)
+ax.set_ylabel(r'Curvatura,  $k(\sigma, \mu)$')
+ax.set_xlim()
+ax.set_ylim([0, 1])
+ax.set_xlabel('Ano')
+# ax.legend()
+plt.subplots_adjust(wspace = 0, hspace = 0)
+plt.show()
+fig.savefig('k_br_basket.png')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 # %%
@@ -303,7 +409,7 @@ my_tickers_temp = ['GOOG', 'MSFT', 'AMZN', 'COKE']
 # Ativos norte americanos não necessitam do sufixo ".SA" para consulta pelo Yahoo Finance
 # my_tickers = list(map(lambda x: x + '.SA', my_tickers_temp))
 
-my_tickers= my_tickers_temp
+my_tickers = my_tickers_temp
 
 stocks_data = yf.download(tickers = my_tickers , start = start_date, end = end_date, interval = '1d')
 

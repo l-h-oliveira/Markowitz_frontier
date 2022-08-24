@@ -42,22 +42,23 @@ A seguir o histórico de preços normalizados de quatro empresas estadunidenses:
 
 ### Petrobrás, Vale, Itaúsa, Bradesco
 
-A seguir o histórico de preços normalizados de quatro empresas estadunidenses: Petrobrás, Vale, Itaúsa e Bradesco. 
+A seguir o histórico de preços normalizados de quatro empresas brasileiras: Petrobrás, Vale, Itaúsa e Bradesco. 
 
 <img src="brasilian_basket.png" 
      style="float: left; margin-left: 10px;" />
 
 No gráfico abaixo, assim como fizemos para os índices, temos os retornos acumulados e as variâncias para as ações na cesta brasileira.
 
-Primeiramente, podemos observar que ação com maior retorno é a da empresa Vale. É também a que possui maior variância. Esta possui um pico muito expressivo em 2020, provavelmente em virtude da oscilação de preços causada pelo rompimento da barragem de Brumadinho.
-
 <img src="mean_and_var_brasilian_basket.png" 
      style="float: left; margin-left: 10px;" />
+
+Primeiramente, podemos observar que ação com maior retorno é a da empresa Vale. É também a que possui maior variância. Esta possui um pico muito expressivo em 2020, provavelmente em virtude da oscilação de preços causada pela pandemia do corona vírus.
 
 Podemos ainda calcular a correlação média entre as ações nas cesta.
 
 <div style="text-align:center"><img src = "corr_br.png" /></div>
 
+Podemos observar correlações elevadas entre  Banco Bradesco e Itaúsa e entre Vale e Petrobrás. É provável que a correlação deva-se à semelhança entre os negócios.
 ## Portifólios Otimizados
  
 ## A Fronteira Eficiente e a Curvatura
