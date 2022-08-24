@@ -101,7 +101,7 @@ fig.savefig('indexes.png')
 # %%
 # Agora, vamos calcular o retorno médio e a variância dos retornos de cada um dos índices. Para isso utilizamos as colunas dos retornos já definidas e calculamos o retorno acumulado médio numa janela móvel com período especificado.
 
-period = 1000
+period = 50
 
 for x in ['IBOV', 'S&P500']:
     # Calculando a média dos retornos na janela especificada
@@ -237,7 +237,7 @@ fig.savefig('mean_and_var_brasilian_basket.png')
 # O último dado relevante para a otimização de portfólios é a correlação entre as ações. A seguir, obtemos a correlação MÉDIA em todo o período entre as ações.
 
 fig, ax = plt.subplots(nrows = 1, ncols = 1, figsize = (6,5))
-sns.heatmap(stocks_data[my_tickers].corr(), annot = True)
+sns.heatmap(stocks_data[my_tickers].corr(), annot = True, cmap = 'viridis')
 plt.savefig('corr_br.png')
 
 # %%
@@ -446,3 +446,56 @@ ax.legend()
 plt.subplots_adjust(wspace = 0, hspace = 0)
 plt.show()
 fig.savefig('usa_basket.png')
+
+
+# %%
+# Vamos calcular os retornos e variâncias de cada uma das ações na cesta brasileira
+
+period = 50
+
+for x in my_tickers:
+    # Calculando a média dos retornos na janela especificada
+    stocks_data['mean_r_' + x] = stocks_data['r_' + x].cumprod().rolling(period).mean()
+
+    # Calculando a variância dos retornos na janela especificada
+    stocks_data['var_r_' + x] = stocks_data['r_' + x].cumprod().rolling(period).var()
+
+# %%
+# Plots dos retornos e variâncias das ações americanas
+
+fig, ax = plt.subplots(nrows = 2, ncols = 1, figsize = (12,6))
+for x in my_tickers:
+    ax[0].plot(stocks_data.index.values, stocks_data['mean_r_' + x], label = x)
+ax[0].set_ylabel(r'$\mu$')
+# ax.set_xticks([])
+ax[0].set_xlim([np.datetime64(dt(int(str(stocks_data.index.values[0])[0:4]), int(str(stocks_data.index.values[0])[5:7]), int(str(stocks_data.index.values[0])[8:10])) - timedelta(days = 50)), np.datetime64(dt(int(str(stocks_data.index.values[- 1])[0:4]), int(str(stocks_data.index.values[-1])[5:7]), int(str(stocks_data.index.values[-1])[8:10])) + timedelta(days = 50))])
+# ax.axvspan(stocks_data.index.values[500], stocks_data.index.values[1200], facecolor='gray')
+# ax[0].set_yticks(list(range(9)))
+# ax[0].set_yticklabels(['0', '', '2', '', '4', '', '6', '',''])
+# ax.set_xlabel('Ano')
+ax[0].legend(loc = 'upper left')
+# ax[0].set_yticks(list(np.arange(0,2.5, 0.5)))
+
+for x in my_tickers:
+    ax[1].plot(stocks_data.index.values, stocks_data['var_r_' + x], label = x)
+ax[1].set_ylabel(r'$\sigma^2$')
+# ax.set_xticks([])
+ax[1].set_xlim([np.datetime64(dt(int(str(stocks_data.index.values[0])[0:4]), int(str(stocks_data.index.values[0])[5:7]), int(str(stocks_data.index.values[0])[8:10])) - timedelta(days = 50)), np.datetime64(dt(int(str(stocks_data.index.values[- 1])[0:4]), int(str(stocks_data.index.values[-1])[5:7]), int(str(stocks_data.index.values[-1])[8:10])) + timedelta(days = 50))])
+# ax.axvspan(stocks_data.index.values[500], stocks_data.index.values[1200], facecolor='gray')
+# ax[0].set_yticks(list(range(9)))
+# ax[0].set_yticklabels(['0', '', '2', '', '4', '', '6', '',''])
+# ax.set_xlabel('Ano')
+# ax[1].set_yticks(list(np.arange(0,0.15, 0.03)))
+ax[1].legend(loc = 'upper left')
+plt.subplots_adjust(wspace = 0, hspace = 0)
+plt.show()
+fig.savefig('mean_and_var_usa_basket.png')
+
+# %% 
+# O último dado relevante para a otimização de portfólios é a correlação entre as ações. A seguir, obtemos a correlação MÉDIA em todo o período entre as ações.
+
+fig, ax = plt.subplots(nrows = 1, ncols = 1, figsize = (6,5))
+sns.heatmap(stocks_data[my_tickers].corr(), annot = True, cmap = 'viridis')
+plt.savefig('corr_us.png')
+
+# %%

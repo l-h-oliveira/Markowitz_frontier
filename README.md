@@ -2,7 +2,7 @@
 ## Objetivos
 - Recolher dados históricos de dois índices (S&P500 e IBOV) para detectarmos períodos de movimentações abruptas;
 - Escolher 4 ações de empresas pertencentes a cada um dos índices e calcular os retornos ao longo do tempo e as respectivas variâncias;
-- Aplicar o processo de otimização às duas cestas de ativos; exibir o retorno do postifólio otimizado;
+- Aplicar o processo de otimização às duas cestas de ativos; exibir o retorno do portifólio otimizado;
 - Exibir a fronteira eficiente
 - Calcular a curvatura da fronteira eficiente sobre o portifólio eficiente;
 - A curvatura sobre o portifólio eficiente pode ser útil como indicativo de períodos de mudanças abrubtas?
@@ -31,14 +31,7 @@ No gráfico abaixo, vemos o retorno médio de cada índice numa janela de 50 dia
 Podemos observar que o índice S&P500 entregaram um retorno maior que o índice Ibovespa. Além disso, o gráfico da variância atesta que o índice Ibovespa está sujeito a oscilações maiores e mais frequentes que o índice S&P500, como pode ser observado no gráfico dos históricos de preços.
 ## Cestas de Ativos
 
-Agora, vamos escolher quatro ativos presentes em cada um dos índices. Vamos exibir gráficos dos preços de cada um deles e calcular os retornos médios e as variâncias médias.
-
-### Google, Mycrosoft, Amazon, Coca-Cola
-
-A seguir o histórico de preços normalizados de quatro empresas estadunidenses: Google, Mycrosoft, Amazon e Coca-Cola. 
-
-<img src="usa_basket.png" 
-     style="float: left; margin-left: 10px;" />
+Agora, vamos escolher quatro ativos presentes em cada um dos índices. Vamos exibir gráficos dos preços; calcular os retornos e as variâncias médias; e as correlações entre os ativos de cada cesta.
 
 ### Petrobrás, Vale, Itaúsa, Bradesco
 
@@ -57,6 +50,26 @@ Primeiramente, podemos observar que ação com maior retorno é a da empresa Val
 Podemos ainda calcular a correlação média entre as ações nas cesta.
 
 <div style="text-align:center"><img src = "corr_br.png" /></div>
+
+Podemos observar correlações elevadas entre  Banco Bradesco e Itaúsa e entre Vale e Petrobrás. É provável que a correlação deva-se à semelhança entre os negócios.
+
+### Google, Mycrosoft, Amazon, Coca-Cola
+
+A seguir o histórico de preços normalizados de quatro empresas estadunidenses: Google, Mycrosoft, Amazon e Coca-Cola. 
+
+<img src="usa_basket.png" 
+     style="float: left; margin-left: 10px;" />
+
+No gráfico abaixo, assim como fizemos para os índices, temos os retornos acumulados e as variâncias para as ações na cesta brasileira.
+
+<img src="mean_and_var_usa_basket.png" 
+     style="float: left; margin-left: 10px;" />
+
+Primeiramente, podemos observar que ação com maior retorno é a da empresa Vale. É também a que possui maior variância. Esta possui um pico muito expressivo em 2020, provavelmente em virtude da oscilação de preços causada pela pandemia do corona vírus.
+
+Podemos ainda calcular a correlação média entre as ações nas cesta.
+
+<div style="text-align:center"><img src = "corr_us.png" /></div>
 
 Podemos observar correlações elevadas entre  Banco Bradesco e Itaúsa e entre Vale e Petrobrás. É provável que a correlação deva-se à semelhança entre os negócios.
 ## Portifólios Otimizados
@@ -101,7 +114,7 @@ onde $\lambda_1$ está relacionado com o vínculo da variância fixada e $\lambd
 $$ \Sigma \vec{\alpha} - \lambda_1 \vec{\mu} - \lambda_2\vec{1} = 0.$$
 
 De onde obtemos
-$$  \vec{\alpha} =  \lambda_1 \Sigma^{-1}\vec{\mu} + \lambda_2\Sigma^{-1}\vec{1} = 0.$$
+$$  \vec{\alpha} =  \lambda_1 \Sigma^{-1}\vec{\mu} + \lambda_2\Sigma^{-1}\vec{1}.$$
 
 Resta determinar $\lambda_1$ e $\lambda_2$. Vamos utilizar as equações de vínculo para obter duas equações e resolver os sistema linear.
 
@@ -111,6 +124,8 @@ $$1 = \vec{\alpha}^t\vec{1}= \lambda_1 \vec{\mu}^t\Sigma^{-1}\vec{1} + \lambda_2
 
 Na forma matricial,
 $$ \begin{pmatrix}\vec{\mu}^t\Sigma^{-1}\mu & \vec{\mu}^t\Sigma^{-1}\vec{1} \\ \vec{\mu}^t\Sigma^{-1}\vec{1} & \vec{1}^t\Sigma^{-1}\vec{1} \end{pmatrix}\begin{pmatrix} \lambda_1 \\ \lambda_2 \end{pmatrix} = \begin{pmatrix} \mu_0 \\ 1 \end{pmatrix}.$$
+
+Com isso, obtemos um sistema de equações que nos permite obter $\lambda_1$ e $\lambda_2$ e, com isso, calcular as alocações do portfólio eficiente.
 
 Note que se conhecemos $\alpha$ podemos obter a variância do portifólio, $ \sigma^2 = \vec{\alpha}^t \Sigma \vec{\alpha}$, em função de um retorno $\mu_0$ fixado. Utilizando as expressões para $\vec{\alpha}$ podemos mostrar que
 
@@ -160,8 +175,17 @@ onde $\mu^\prime$ é a primeira derivada de $\mu$ em relação a $t$ e $\mu^{\pr
 
 Felizmente as derivadas das funções trigonométricas hiperbólicas possuem relações recorrentes. Isto nos permite simplificar enormemente a expressão da curvatura
 
-$$k(t)= \frac{a}{d} \left(\cosh^2(t) + a\sinh^2(t)\right)^{-\frac{3}{2}}.$$
+$$k(t)= \frac{a}{\sqrt{c - \frac{b^2}{4a}}} \left(\cosh^2(t) + a\sinh^2(t)\right)^{-\frac{3}{2}}.$$
+
+O primeiro ponto de interesse acontece quando $t=0$. Nesse caso, temos uma expressão muito simples para a curvatura
+
+$$k(0)= \frac{a}{\sqrt{c - \frac{b^2}{4a}}}.$$
 
 Mais ainda, podemos expressar a curvatura em termos de $\mu$ e $\sigma$
 
-$$k(\mu, \sigma) = \frac{c - \frac{b^2}{4a}}{\left(\sigma^2 + \left(a\mu + \frac{b}{2}\right)^2\right)^{\frac{3}{2}}}.$$
+$$k(\mu, \sigma) = \frac{ac - \frac{b^2}{4}}{\left(\sigma^2 + \left(a\mu + \frac{b}{2}\right)^2\right)^{\frac{3}{2}}}.$$
+Isto nos permitirá calcular a curvatura no ponto que representa o portfólio eficiente.
+
+Podemos ainda nos perguntar como é a curvatura no ponto em que a fronteira eficiente intercepta o eixo das abscissas. Isto é, quando $\mu(t)=0$. Isto nos permite obter o respectivo valor de $t$ e, em seguida, a variância desse ponto:
+$$ \sigma^2 = \frac{4ac + b^2}{4a}.$$
+E assim, conseguimos obter a curvatura da hipérbole nesse ponto.
