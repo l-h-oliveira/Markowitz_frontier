@@ -73,7 +73,18 @@ Podemos ainda calcular a correlação média entre as ações nas cesta.
 
 Podemos observar correlações elevadas entre  Banco Bradesco e Itaúsa e entre Vale e Petrobrás. É provável que a correlação deva-se à semelhança entre os negócios.
 ## Portifólios Otimizados
- 
+
+Para utilizar o processo de otimização de Markowitz na forma mais básica, devemos fixar um valor para retorno e obter uma alocação que minimize a variância do portfólio. Entretanto, podemos adicionar um vínculo: obter o portfólio que maximize o Sharpe ratio, que é definido por
+
+$$SR(M) =  \frac{\mu_M - r}{\sigma_M},$$
+onde $r$ é o retorno de um ativo livre de risco ($\sigma^2 = 0$), $\mu_M$ é o retorno do portfólio e $\sigma_M$ seu desvio-padrão.
+
+Geralmente utiliza-se a taxa básica de juros so país como ativo livre de risco. No Brasil, a taxa básica é a taxa SELIC. No gráfico abaixo, podemos ver a evolução do retorno anual da taxa SELIC.
+
+<div style="text-align:center"><img src = "selic_br.png" /></div>
+
+
+
 ## A Fronteira Eficiente e a Curvatura
 
 ## Apêndice A: Otimização de Portifólios de Markowitz

@@ -300,16 +300,58 @@ full_data['SELIC_daylly'] = full_data['Taxa SELIC'].apply(lambda x: (1 + x/100)*
 
 full_data['r_SELIC'] = full_data['SELIC_daylly'].rolling(window = period).apply(np.prod)
 
+# %%
+# plot evolução da taxa selic anual
+fig, ax = plt.subplots(nrows = 1, ncols = 1, figsize = (12,6))
+
+ax.plot(full_data.index.values, full_data['Taxa SELIC'].values, color = 'blue', linewidth = 3)
+# for x in [2008, 2015, 2011, 2020]:
+#         ax.axvspan(index_data.index.values[np.where(index_data.index.year.values == x)[0][0]], index_data.index.values[np.where(index_data.index.year.values == x)[0][-1]], facecolor = 'gray')
+ax.set_ylabel(r'$r (\%  \ Ano)$')
+ax.set_xlim([np.datetime64(dt(int(str(full_data.index.values[0])[0:4]), int(str(full_data.index.values[0])[5:7]), int(str(full_data.index.values[0])[8:10])) - timedelta(days = 50)), np.datetime64(dt(int(str(full_data.index.values[- 1])[0:4]), int(str(full_data.index.values[-1])[5:7]), int(str(full_data.index.values[-1])[8:10])) + timedelta(days = 50))])
+# ax.set_ylim([0, 1])
+ax.set_xlabel('Ano')
+# ax.legend()
+plt.subplots_adjust(wspace = 0, hspace = 0)
+plt.show()
+fig.savefig('selic_br.png')
+
+# %%
+# Exemplo de fronteira eficiente com ativos marcados no plano "Sharpe"
+
+# obtendo a alocação do portfólio eficiente no último dia do registro
+m = full_data.iloc[-1, 6]
+l1 = R22*m/d - R12/d
+l2 = -R12*m/d + R11/d
+
+alpha = l1*inv_corr@stocks_data.loc[stocks_data.index[-1], mean_cols].values + l2*inv_corr@np.ones(len(my_tickers))
+
+# plotando os ativos no plano e exibindo a fronteira eficiente
+
+
+
+
+# %%
+# cálculo da cruvatura no ponto inicial da parametrização, t = 0
+
+full_data['k1'] = full_data['a']/np.sqrt(full_data['c'] - full_data['b']**2/full_data['a']/4)
+
+# cálculo da curvatura no ponto em que o retorno do ponto na fronteira eficiente é nulo, vértice da hipérbole
+
+full_data['k2'] = (full_data['a']*full_data['c'] - full_data['b']**2/4)/((4*full_data['a']*full_data['c'] + full_data['b']**2)/(4*full_data['a']) +  full_data['b']**2/4)
+
+
+# cálculo do retorno e variância do portfólio eficiente
 full_data['r_ef'] = -(full_data['r_SELIC']*full_data['b'] + 2*full_data['c'])/(2*full_data['r_SELIC']*full_data['a'] + full_data['b'])
 
 full_data['var_ef'] = (4*full_data['a']*full_data['c'] - full_data['b']**2)*(full_data['a']*full_data['r_SELIC']**2 + full_data['b']*full_data['r_SELIC'] + full_data['c'])/(2*full_data['r_SELIC']*full_data['a'] + full_data['b'])**2
 
-full_data['k'] = (full_data['c'] - full_data['b']**2/full_data['a']/4)/(full_data['var_ef'] + (full_data['a']*full_data['r_ef'] + full_data['b']/2)**2)**(3/2)
+# cálculo da curvatura da hipérbole no portfólio eficiente
+full_data['k3'] = (full_data['a']*full_data['c'] - full_data['b']**2/4)/(full_data['var_ef'] + (full_data['a']*full_data['r_ef'] + full_data['b']/2)**2)**(3/2)
 
 full_data = full_data.dropna()
 # %%
-# Plot  curvatura
-# Cesta americana
+# Plot  curvatura, cesta brasileira
 fig, ax = plt.subplots(nrows = 1, ncols = 1, figsize = (12,6))
 
 ax.plot(full_data.index.values, np.abs(full_data['k'].values)/500, color = 'blue')
