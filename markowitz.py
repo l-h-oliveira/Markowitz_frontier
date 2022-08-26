@@ -317,21 +317,6 @@ plt.show()
 fig.savefig('selic_br.png')
 
 # %%
-# Exemplo de fronteira eficiente com ativos marcados no plano "Sharpe"
-
-# obtendo a alocação do portfólio eficiente no último dia do registro
-m = full_data.iloc[-1, 6]
-l1 = R22*m/d - R12/d
-l2 = -R12*m/d + R11/d
-
-alpha = l1*inv_corr@stocks_data.loc[stocks_data.index[-1], mean_cols].values + l2*inv_corr@np.ones(len(my_tickers))
-
-# plotando os ativos no plano e exibindo a fronteira eficiente
-
-
-
-
-# %%
 # cálculo da cruvatura no ponto inicial da parametrização, t = 0
 
 full_data['k1'] = full_data['a']/np.sqrt(full_data['c'] - full_data['b']**2/full_data['a']/4)
@@ -352,27 +337,79 @@ full_data['k3'] = (full_data['a']*full_data['c'] - full_data['b']**2/4)/(full_da
 full_data = full_data.dropna()
 # %%
 # Plot  curvatura, cesta brasileira
+for y in ['k1', 'k2', 'k3']:
+    fig, ax = plt.subplots(nrows = 1, ncols = 1, figsize = (12,6))
+
+    ax.plot(full_data.index.values, np.abs(full_data[y].values), color = 'blue')
+    for x in [2008, 2015, 2011, 2020]:
+            ax.axvspan(index_data.index.values[np.where(index_data.index.year.values == x)[0][0]], index_data.index.values[np.where(index_data.index.year.values == x)[0][-1]], facecolor = 'gray')
+    # ax.axhline(0.4)
+    ax.set_ylabel(r'Curvatura,  $k(\sigma, \mu)$')
+    ax.set_xlim()
+    
+    # TODO
+    # colocar alocaçao no gráfico
+
+    # ax.set_ylim([0, 1])
+    ax.set_xlabel('Ano')
+    # ax.legend()
+    plt.subplots_adjust(wspace = 0, hspace = 0)
+    plt.show()
+    fig.savefig(y + '_br_basket.png')
+
+
+# %%
+# Exemplo de fronteira eficiente com ativos marcados no plano "Sharpe" (estamos realizando este cálculo aqui, para coletar o último valor válido das curvaturas)
+
+# obtendo a alocação do portfólio eficiente no último dia do registro
+
+# coletanto o índice do último registro válido das curvaturas
+a = full_data.index[-1]
+
+
+# retorno do portfólio eficiente e multiplicadores de Lagrange
+m = full_data.loc[a, 'r_ef'] 
+l1 = R22*m/d - R12/d
+l2 = -R12*m/d + R11/d
+
+# obtendo a alocação do portfólio eficiente
+alpha = l1*inv_corr@stocks_data.loc[a, mean_cols].values + l2*inv_corr@np.ones(len(my_tickers))
+
+# plotando os ativos no plano e exibindo a fronteira eficiente
+
+# posição dos ativos no plano Sharpe
+var_assets = stocks_data.loc[a, var_cols].values
+returns_assets = stocks_data.loc[a, mean_cols].values
+
+# obtendo a fronteira eficiente usando as parametrizações
+t = np.linspace(-3, 3, 100)
+var = np.sqrt(full_data.loc[a, 'c'] - full_data.loc[a, 'b']**2/4/full_data.loc[a, 'a'])*np.cosh(t)
+mu = np.sqrt(full_data.loc[a, 'c'] - full_data.loc[a, 'b']**2/4/full_data.loc[a, 'a'])/np.sqrt(full_data.loc[a, 'a'])*np.sinh(t) - full_data.loc[a, 'b']/2/full_data.loc[a, 'a']
+
+
+# %%
 fig, ax = plt.subplots(nrows = 1, ncols = 1, figsize = (12,6))
 
-ax.plot(full_data.index.values, np.abs(full_data['k'].values)/500, color = 'blue')
-for x in [2008, 2015, 2011, 2020]:
-        ax.axvspan(index_data.index.values[np.where(index_data.index.year.values == x)[0][0]], index_data.index.values[np.where(index_data.index.year.values == x)[0][-1]], facecolor = 'gray')
-ax.axhline(0.4)
-ax.set_ylabel(r'Curvatura,  $k(\sigma, \mu)$')
-ax.set_xlim()
-ax.set_ylim([0, 1])
+ax.plot(var, mu)
+# ponto portfólio eficiente
+ax.plot(np.sqrt(full_data.loc[a, 'var_ef']), full_data.loc[a, 'r_ef'], 'or')
+
+# ativo livre de risco
+ax.plot(0, full_data.loc[a, 'r_SELIC'], 'ob')
+# ax[0].set_yticks(list(range(9)))
+# ax[0].set_yticklabels(['0', '', '2', '', '4', '', '6', '',''])
+
+
+# ativos na cesta
+for i in range(len(my_tickers)):
+    ax.scatter(np.sqrt(stocks_data.loc[a, var_cols[i]]), stocks_data.loc[a, mean_cols[i]], label = my_tickers[i][:-3])
+
+ax.axhline(0, color = 'gray')
 ax.set_xlabel('Ano')
-# ax.legend()
+ax.legend()
 plt.subplots_adjust(wspace = 0, hspace = 0)
 plt.show()
-fig.savefig('k_br_basket.png')
-
-
-
-
-
-
-
+fig.savefig('ef_br.png')
 
 
 

@@ -87,6 +87,14 @@ Geralmente utiliza-se a taxa básica de juros so país como ativo livre de risco
 
 ## A Fronteira Eficiente e a Curvatura
 
+<div style="text-align:center"><img src = "ef_br.png" /></div>
+
+<div style="text-align:center"><img src = "k1_br_basket.png" /></div>
+
+<div style="text-align:center"><img src = "k2_br_basket.png" /></div>
+
+<div style="text-align:center"><img src = "k3_br_basket.png" /></div>
+
 ## Apêndice A: Otimização de Portifólios de Markowitz
 Um portfólio é definido através de um conjunto de ativos $A_1, A_2, ... , A_N$ e a respectiva alocação (percentual) $\alpha_1, \alpha_2, ... , \alpha_N$. Desse modo, $\alpha_1~+~\alpha_2~+~\cdots~+~\alpha_N~=~1$.
 
