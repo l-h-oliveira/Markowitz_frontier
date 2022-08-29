@@ -79,13 +79,17 @@ Para utilizar o processo de otimização de Markowitz na forma mais básica, dev
 $$SR(M) =  \frac{\mu_M - r}{\sigma_M},$$
 onde $r$ é o retorno de um ativo livre de risco ($\sigma^2 = 0$), $\mu_M$ é o retorno do portfólio e $\sigma_M$ seu desvio-padrão.
 
-Geralmente utiliza-se a taxa básica de juros so país como ativo livre de risco. No Brasil, a taxa básica é a taxa SELIC. No gráfico abaixo, podemos ver a evolução do retorno anual da taxa SELIC.
+Geralmente utiliza-se a taxa básica de juros so país como ativo livre de risco. No Brasil, a taxa básica é a taxa Selic. No gráfico abaixo, podemos ver a evolução do retorno anual da taxa Selic.
 
 <div style="text-align:center"><img src = "selic_br.png" /></div>
 
 
 
 ## A Fronteira Eficiente e a Curvatura
+
+De posse dos retornos anuais da taxa Selic, podemos obter os respectivos retornos diários. E, por fim, obter os retornos médios livres de risco na janela de tempo utilizada.
+
+Utilizando o processo de otimização de Markowitz descrito no apêndice, podemos determinar a fronteira eficiente, que pode ser visualizada na cor preta na imagem abaixo.
 
 <div style="text-align:center"><img src = "ef_br.png" /></div>
 
@@ -192,19 +196,19 @@ $$k(t) = \frac{\mu^\prime\sigma^{\prime\prime} - \mu^{\prime\prime}\sigma^\prime
 
 onde $\mu^\prime$ é a primeira derivada de $\mu$ em relação a $t$ e $\mu^{\prime\prime}$ é a segunda derivada em relação a $t$, analogamente para $\sigma^\prime$ e $\sigma^{\prime\prime}$.
 
-Felizmente as derivadas das funções trigonométricas hiperbólicas possuem relações recorrentes. Isto nos permite simplificar enormemente a expressão da curvatura
+Felizmente as derivadas das funções trigonométricas hiperbólicas possuem relações recorrentes. Isto nos permite simplificar enormemente a expressão geral da curvatura
 
 $$k(t)= \frac{a}{\sqrt{c - \frac{b^2}{4a}}} \left(\cosh^2(t) + a\sinh^2(t)\right)^{-\frac{3}{2}}.$$
 
-O primeiro ponto de interesse acontece quando $t=0$. Nesse caso, temos uma expressão muito simples para a curvatura
+O primeiro ponto de interesse para calcularmos a curvatura, é o um dos vértices da hipérbole. Utilizando nossa parametrização, vemos que o vérice corresponde ao ponto obtido quando $t=0$. Nesse caso, temos uma expressão muito simples para a curvatura
 
 $$k(0)= \frac{a}{\sqrt{c - \frac{b^2}{4a}}}.$$
 
-Mais ainda, podemos expressar a curvatura em termos de $\mu$ e $\sigma$
+Podemos ainda expressar a curvatura geral em termos de $\mu$ e $\sigma$
 
 $$k(\mu, \sigma) = \frac{ac - \frac{b^2}{4}}{\left(\sigma^2 + \left(a\mu + \frac{b}{2}\right)^2\right)^{\frac{3}{2}}}.$$
 Isto nos permitirá calcular a curvatura no ponto que representa o portfólio eficiente.
 
-Podemos ainda nos perguntar como é a curvatura no ponto em que a fronteira eficiente intercepta o eixo das abscissas. Isto é, quando $\mu(t)=0$. Isto nos permite obter o respectivo valor de $t$ e, em seguida, a variância desse ponto:
+Por fim, podemos nos perguntar como é a curvatura no ponto em que a fronteira eficiente intercepta o eixo das abscissas. Isto é, quando $\mu(t)=0$. Isto nos permite obter o respectivo valor de $t$ e, em seguida, a variância desse ponto:
 $$ \sigma^2 = \frac{4ac + b^2}{4a}.$$
 E assim, conseguimos obter a curvatura da hipérbole nesse ponto.
