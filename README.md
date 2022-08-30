@@ -89,9 +89,12 @@ Geralmente utiliza-se a taxa básica de juros so país como ativo livre de risco
 
 De posse dos retornos anuais da taxa Selic, podemos obter os respectivos retornos diários. E, por fim, obter os retornos médios livres de risco na janela de tempo utilizada.
 
-Utilizando o processo de otimização de Markowitz descrito no apêndice, podemos determinar a fronteira eficiente, que pode ser visualizada na cor preta na imagem abaixo.
+Utilizando o processo de otimização de Markowitz descrito no apêndice, podemos determinar a fronteira eficiente, que pode ser visualizada na cor preta na imagem abaixo. Incluímos também a data final da janela de tempo utilizada para calcular as médias e a alocação fornecida pelo processo de otimização. os valores negativos representam a operação de venda de ativos.
 
 <div style="text-align:center"><img src = "ef_br.png" /></div>
+
+O ponto na cor roxa representa o ativo livre de risco, que tem um retorno médio positivo na janela de tempo utilizada (porém pequeno); o ponto na cor preta, sobre a fronteira eficiente representa o portfólio otimizado. Note que este é o ponto da fronteira eficiente cuja a reta que o une ao ativo livre de risco possui a maior inclinação (Sharpe ratio). Observe também, que a fronteira eficiente encapsula todos os ativo que compõem o portfólio.
+
 
 <div style="text-align:center"><img src = "k1_br_basket.png" /></div>
 
