@@ -41,6 +41,7 @@ def k(a, b, c, r):
 # Primeiramente, inicializamos três colunas no dataframe que irão armazenar os parâmetros a, b e c que definem a fronteira eficiente.
 
 # importando dados
+period = 50
 stocks_data = pd.read_csv('stocks_data_br.csv')
 #convertendo o índice no tipo datetime64
 stocks_data['Date'] = pd.to_datetime(stocks_data['Date'], dayfirst= True, yearfirst=True)
@@ -50,14 +51,30 @@ index_data = pd.read_csv('index_data.csv')
 index_data['Date'] = pd.to_datetime(index_data['Date'], dayfirst= True, yearfirst=True)
 index_data = index_data.set_index('Date')
 
+# %% 
+# Para obtermos o portfólio otimizado em relação ao Sharpe-ratio, precisamos do valor da taxa livre de risco naquele período. Vamos utilizar como de costume, a taxa selic
 
-stocks_data[['a', 'b', 'c']] = pd.DataFrame({'a':[], 'b':[], 'c':[]})
+# Obtendo dados da taxa livre de risco
+full_data = pd.read_csv('consulta_selic_b3.txt', sep='	', decimal=',')
 
-# Vamos obter a matriz de correlação entre os ativos em cada janela móvel. Entretanto, o método .corr() do pandas com janela móvel utiliza somente o coeficiente de Pearson ( https://en.wikipedia.org/wiki/Pearson_correlation_coefficient ). Para obter as corelações puras, devemos multiplicar pelos desvios-padrão de cada ativo.
+# Transformando as dadas de texto para datetime
+full_data['Date'] = pd.to_datetime(full_data['Data'], dayfirst= True, yearfirst=True)
 
+full_data = full_data.drop(columns= 'Data')
+full_data = full_data.set_index('Date')
+
+# queremos calcular o retorno da taxa selic ao longo da nossa janela de tempo. Para isso, vamos calcular o produto cumulativo de (1 + x/100) com x sendo o respectivo retorno diário da taxa selic 
+full_data['SELIC_daylly'] = full_data['Taxa SELIC'].apply(lambda x: (1 + x/100)**(1/365))
+
+# note que o retorno da taxa Selic está acrescido de 1, pois estamos trabalhando com a fórmula de juros compostos
+full_data['r_SELIC'] = full_data['SELIC_daylly'].rolling(window = period).apply(np.prod) - 1
+
+full_data[['a', 'b', 'c', 'aloc']] = pd.DataFrame({'a':[], 'b':[], 'c':[], 'aloc':[]})
+
+# %%
 #variáveis de configuração
-period = 50
-my_tickers = ['BBDC4.SA', 'ITSA4.SA', 'PETR4.SA', 'VALE3.SA']
+my_tickers = list(filter(lambda x: 'r_' not in x, stocks_data.columns))
+
 names = list(map(lambda x: 'r_' + x, my_tickers))
 
 temp0 = stocks_data[my_tickers].rolling(period).corr().dropna()
@@ -66,11 +83,14 @@ mean_cols = list(map(lambda x: 'mean_' + x, names))
 var_cols = list(map(lambda x: 'var_' + x, names))
 vec_ones = np.ones((len(var_cols), 1))
 
+print('\n' + 25*'=')
+regs = 0
+print('Registros com determinante nulo\n')
 for x in stocks_data.index[period - 1:]:
     # Vetor com os retornos
     mu = np.matrix(stocks_data.loc[x, mean_cols].values).transpose()
 
-    # Obtendo a matriz de correlações
+    # Vamos obter a matriz de correlação entre os ativos em cada janela móvel. Entretanto, o método .corr() do pandas com janela móvel utiliza somente o coeficiente de Pearson ( https://en.wikipedia.org/wiki/Pearson_correlation_coefficient ). Para obter as corelações puras, devemos multiplicar pelos desvios-padrão de cada ativo.
     s = np.sqrt(np.matrix(stocks_data.loc[x, var_cols].values))
     S = np.dot(s.transpose(),s)
 
@@ -84,33 +104,28 @@ for x in stocks_data.index[period - 1:]:
 
         d = R11*R22 - R12**2
 
-        stocks_data.loc[x, ['a', 'b', 'c']] = R22/d, -2*R12/d, R11/d
+        full_data.loc[x, ['a', 'b', 'c']] = R22/d, -2*R12/d, R11/d
+
+        # retorno do portfólio eficiente e multiplicadores de Lagrange
+        r = full_data.loc[x, 'r_SELIC']
+        m = -(r*full_data.loc[x, 'b'] + 2*full_data.loc[x, 'c'])/(2*r*full_data.loc[x, 'a'] + full_data.loc[x, 'b'])
+        l1 = R22*m/d - R12/d
+        l2 = -R12*m/d + R11/d
+
+        # obtendo a alocação do portfólio eficiente
+        alpha = l1*inv_corr@stocks_data.loc[x, mean_cols].values + l2*inv_corr@np.ones(len(my_tickers))
+
+        # Salvaando alocações no DataFrame
+        full_data.loc[x, 'aloc'] = str(alpha.round(2))
+
     except:
         # Examinando os registros em que a matriz de correlação é singular ou d = 0 (os únicos problemas que podem emergir aqui)
         print(x)
+        regs += 1
         continue
 
-# Para obtermos o portfólio otimizado em relação ao Sharpe-ratio, precisamos do valor da taxa livre de risco naquele período. Vamos utilizar como de costume, a taxa selic
-
-# %% Obtendo dados da taxa livre de risco
-selic_data = pd.read_csv('consulta_selic_b3.txt', sep='	', decimal=',')
-
-# Transformando as dadas de texto para datetime
-selic_data['Date'] = pd.to_datetime(selic_data['Data'], dayfirst= True, yearfirst=True)
-
-selic_data = selic_data.drop(columns= 'Data')
-
-# Agora, vamos juntar os dados de preço de ações com os dados da taxa selic
-
-full_data = pd.merge(stocks_data[['a', 'b', 'c']], selic_data, on = 'Date', how = 'left')
-
-full_data = full_data.set_index('Date')
-
-# queremos calcular o retorno da taxa selic ao longo da nossa janela de tempo. Para isso, vamos calcular o produto cumulativo de (1 + x/100) com x sendo o respectivo retorno diário da taxa selic 
-full_data['SELIC_daylly'] = full_data['Taxa SELIC'].apply(lambda x: (1 + x/100)**(1/365))
-
-# note que o retorno da taxa Selic está acrescido de 1, pois estamos trabalhando com a fórmula de juros compostos
-full_data['r_SELIC'] = full_data['SELIC_daylly'].rolling(window = period).apply(np.prod) - 1
+print('\n{} registros com determinante nulo'.format(regs))
+print(25*'=' + '\n')
 
 # %%
 # cálculo da cruvatura no vértice direito da hipérbole, t = 0
@@ -131,8 +146,11 @@ full_data['var_ef'] = (4*full_data['a']*full_data['c'] - full_data['b']**2)*(ful
 full_data['k3'] = (full_data['a']*full_data['c'] - full_data['b']**2/4)/(full_data['var_ef'] + (full_data['a']*full_data['r_ef'] + full_data['b']/2)**2)**(3/2)
 
 full_data = full_data.dropna()
+full_data.to_csv('full_data.csv')
+
 # %%
 # Plot  curvatura, cesta brasileira
+
 for y in ['k1', 'k2', 'k3']:
     fig, ax = plt.subplots(nrows = 1, ncols = 1, figsize = (12,6))
 
@@ -142,9 +160,6 @@ for y in ['k1', 'k2', 'k3']:
     # ax.axhline(0.4)
     ax.set_ylabel(r'Curvatura,  $k(\sigma, \mu)$')
     ax.set_xlim()
-    
-    # TODO
-    # colocar alocaçao no gráfico
 
     # ax.set_ylim([0, 1])
     ax.set_xlabel('Ano')
@@ -162,27 +177,12 @@ for y in ['k1', 'k2', 'k3']:
 # coletanto o índice do último registro válido das curvaturas
 a = full_data.index[-1]
 
-
-# retorno do portfólio eficiente e multiplicadores de Lagrange
-m = full_data.loc[a, 'r_ef'] 
-l1 = R22*m/d - R12/d
-l2 = -R12*m/d + R11/d
-
-# obtendo a alocação do portfólio eficiente
-alpha = l1*inv_corr@stocks_data.loc[a, mean_cols].values + l2*inv_corr@np.ones(len(my_tickers))
-
-# Alocação para escrever no plot da fronteira
-aloc = alpha.round(2)
-
 ### obtendo a fronteira eficiente usando as parametrizações.
 
 # Obtendo os valores extremos do parâmetro t
 t_max = np.arccosh(np.sqrt(stocks_data.loc[a, var_cols].values).max()/np.sqrt(full_data.loc[a, 'c'] - full_data.loc[a, 'b']**2/4/full_data.loc[a, 'a']))
 
 # definindo o parâmetro t
-t = np.linspace(0, t_max, 100)
-
-# calculando as componentes da fronteira eficiente
 t = np.linspace(0, t_max, 100)
 
 # calculando as componentes da fronteira eficiente (metade superior e inferior)
@@ -212,6 +212,8 @@ ax.plot(np.sqrt(full_data.loc[a, 'var_ef']), full_data.loc[a, 'r_ef'], 'ok', mar
 # ativo livre de risco
 ax.plot(0, full_data.loc[a, 'r_SELIC'], 'o', markersize = 15, color = 'purple')
 
+# carregando alocação
+aloc = list(map(float, filter(lambda x: x!= '', full_data.loc[a, 'aloc'][1:-1].split(' '))))
 # ativos na cesta
 u = ''
 for i in range(len(my_tickers)):
@@ -238,5 +240,4 @@ plt.subplots_adjust(wspace = 0, hspace = 0)
 plt.show()
 fig.savefig('ef_br.png')
 
-# TODO fazer vídeo com a evolução das fronteiras eficientes
 # %%
