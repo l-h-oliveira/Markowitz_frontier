@@ -1,13 +1,11 @@
 # %%
-from matplotlib import ticker
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
 import yfinance as yf
 from datetime import datetime as dt
-from datetime import timedelta
-from matplotlib.animation import FuncAnimation
+import matplotlib.animation as anime
 
 # Faz com que o terminal exiba as tabelas no estilo do Jupyther
 from IPython.display import display 
@@ -16,10 +14,10 @@ from IPython.display import display
 from scipy.linalg import inv
 
 # Configurações matplotlib
-plt.rc('text', usetex = True)
-plt.rc('font', **{'family' : "sans-serif"})
-params= {'text.latex.preamble' : [r'\usepackage{amsmath}']}
-plt.rcParams.update(params)
+# plt.rc('text', usetex = True)
+# plt.rc('font', **{'family' : "sans-serif"})
+# params= {'text.latex.preamble' : [r'\usepackage{amsmath}']}
+# plt.rcParams.update(params)
 
 
 font1 = {'size': 24}
@@ -55,18 +53,31 @@ my_tickers = list(filter(lambda x: 'r_' not in x, stocks_data.columns))
 mean_cols = list(filter(lambda x: x[:4] == 'mean', stocks_data.columns))
 var_cols = list(filter(lambda x: x[:3] == 'var', stocks_data.columns))
 
-p = -1
-fig, ax = plt.subplots(nrows = 1, ncols = 1, figsize = (12,6))
-ax.set_xlabel(r'$\sigma$', fontdict = font1)
-ax.set_ylabel(r'$\mu$', fontdict = font1)
+''' Precisamos fixar os limites dos eixos. Para isso, precisamos obter os valores máximos da fronteira eficiente, através do parâmetro t.
+'''
+# limite de dados utilizados na animação
+lim = full_data.shape[0]
+
+# valor máximo do desvio-padrão
+dom = full_data.index[:lim]
+
+dp_max = np.sqrt(np.nanmax(stocks_data.loc[dom, var_cols]))
+
+r_max = np.nanmin(- full_data.loc[dom, 'b'] + np.sqrt(full_data.loc[dom, 'b']**2 - 4*full_data.loc[dom, 'a']*(full_data.loc[dom, 'c'] - dp_max**2))/2/full_data.loc[dom, 'a']) + 1
+
+# %%
+fig, ax = plt.subplots(nrows = 1, ncols = 1, figsize = (13,6))
 
 def fronteira(p):
+    # Limpando a figura para o próximo frame
+    ax.cla()
+    print(p)
     a = full_data.index[p]
 
     ### obtendo a fronteira eficiente usando as parametrizações.
 
     # Obtendo os valores extremos do parâmetro t
-    t_max = np.arccosh(np.sqrt(stocks_data.loc[a, var_cols].values).max()/np.sqrt(full_data.loc[a, 'c'] - full_data.loc[a, 'b']**2/4/full_data.loc[a, 'a']))
+    t_max = np.arccosh(dp_max/np.sqrt(full_data.loc[a, 'c'] - full_data.loc[a, 'b']**2/4/full_data.loc[a, 'a']))
 
     # definindo o parâmetro t
     t = np.linspace(0, t_max, 100)
@@ -81,48 +92,64 @@ def fronteira(p):
     # Fronteira Eficiente
     ax.plot(var, mu_n, color = 'black', linewidth = 3)
     ax.plot(var, mu_p, color = 'black', linewidth = 3)
-    # ax.fill_between(var, mu_n, mu_p, facecolor = 'lightgray')
+    ax.fill_between(var, mu_n, mu_p, facecolor = 'lightgray')
 
     #reta Sharpe
-    t2 = np.linspace(0, 5, 100)
-    ax.cla()
-    ax.plot(np.sqrt(full_data.loc[a, 'var_ef'])*t2, (full_data.loc[a, 'r_ef'] - full_data.loc[a, 'r_SELIC'])*t2 + full_data.loc[a, 'r_SELIC'], 'g', linestyle = 'dashed', linewidth = 4)
+    ax.plot([0, 2*np.sqrt(full_data.loc[a, 'var_ef'])], [full_data.loc[a, 'r_SELIC'], 2*full_data.loc[a, 'r_ef']], 'g', linestyle = 'dashed', linewidth = 4)
 
-    # ponto portfólio eficiente
-    ax.plot(np.sqrt(full_data.loc[a, 'var_ef']), full_data.loc[a, 'r_ef'], 'ok', markersize = 15)
+    # # ponto portfólio eficiente
+    ax.plot(np.sqrt(full_data.loc[a, 'var_ef']), full_data.loc[a, 'r_ef'], 'ok', markersize = 12)
 
     # ativo livre de risco
-    ax.plot(0, full_data.loc[a, 'r_SELIC'], 'o', markersize = 15, color = 'purple')
+    ax.plot(0, full_data.loc[a, 'r_SELIC'], 'o', markersize = 12, color = 'purple')
 
     # carregando alocação
     aloc = list(map(float, filter(lambda x: x!= '', full_data.loc[a, 'aloc'][1:-1].split(' '))))
     # ativos na cesta
     u = ''
     for i in range(len(my_tickers)):
-        ax.plot(np.sqrt(stocks_data.loc[a, var_cols[i]]), stocks_data.loc[a, mean_cols[i]], 'o', markersize = 15, label = my_tickers[i][:-3])
+        ax.plot(np.sqrt(stocks_data.loc[a, var_cols[i]]), stocks_data.loc[a, mean_cols[i]], 'o', markersize = 12, label = my_tickers[i][:-3])
 
         # Alocação
-        u = u + '(' + str(aloc[i]) + ')' + my_tickers[i][:-3] + ' + '
+        u = u + '(' + '{:.2f}'.format(aloc[i]) + ')' + my_tickers[i][:-3] + ' + '
 
-    ax.text(0.005, mu_n.min(), r'$\alpha \approx' + u[:-3] + '$', fontdict = {'size': 15})
+    # ax.text(0.005, mu_n.min(), r'$\alpha \approx' + u[:-3] + '$', fontdict = {'size': 15})
 
     # Data
-    ax.text(0.005, mu_n.min() + 0.3, r'$' + a.strftime('%d/%m/%Y') + '$', fontdict = {'size': 15})
+    # ax.text(0.005, mu_n.min() + 0.3, r'$' + a.strftime('%d/%m/%Y') + '$', fontdict = {'size': 15})
+
+    # Data e alocação exibidos no título
+    ax.set_title(r'$' + a.strftime('%d/%m/%Y') + '--' + r'\alpha \approx' + u[:-3] + '$', fontdict = font2)
 
     # ax.axhline(0, color = 'gray')
-    ax.legend(loc = 'upper left')
-    ax.set_xlim(0, var.max() + 0.005)
-    ax.set_ylim(mu_n.min(), mu_p.max())
-    ax.spines['bottom'].set_position('zero') #colocando eixo x sobre 0
-    print(mu_n[0])
-    return ax,
+    ax.legend(loc = (1.02, 0.5))
+
+    # axis limits
+    ax.set_xlim(0, dp_max)
+    ax.set_ylim(0, 2.4)
+    
+    # axis labels
+    ax.set_xlabel(r'$\sigma$', fontdict = font1)
+    ax.set_ylabel(r'$\mu$', fontdict = font1)
+
+    # colocando eixo x sobre 0
+    # ax.spines['bottom'].set_position('zero') 
+    # return ax,
 
 plt.xticks(fontsize = 18)
 plt.yticks(fontsize = 18)
 plt.subplots_adjust(wspace = 0, hspace = 0)
 
-animation = FuncAnimation(fig, func = fronteira, frames = range(20), interval = 500)
+
+# %%
+animation = anime.FuncAnimation(fig, func = fronteira, frames = range(lim), interval = 250, repeat = False)
+
+# Vídeo
+writervideo = anime.PillowWriter(fps = 45)
+animation.save('br_fronteir_anime.gif', writer=writervideo)
+
 plt.show()
-# animation.save('br_frontier.mp4')
+plt.close()
+
 
 # %%
