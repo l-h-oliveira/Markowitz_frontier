@@ -95,6 +95,7 @@ Utilizando o processo de otimização de Markowitz descrito no apêndice, podemo
 
 O ponto na cor roxa representa o ativo livre de risco, que tem um retorno médio positivo na janela de tempo utilizada (porém pequeno); o ponto na cor preta, sobre a fronteira eficiente representa o portfólio otimizado. Note que este é o ponto da fronteira eficiente cuja a reta que o une ao ativo livre de risco possui a maior inclinação (Sharpe ratio). Observe também, que a fronteira eficiente encapsula todos os ativo que compõem o portfólio.
 
+Abaixo, uma pequena animação da evolução temporal da fronteira eficiente. Também estão marcados os ativos no portfólio, o ativo livre de risco e a alocação ideal $\alpha$.
 [//]: <>  (gif da fronteira eficiente <div style="text-align:center"><img src = "br_fronteir_anime1.gif" /></div>)
 
 <div style="text-align:center"><video width="320" height="240" controls>
