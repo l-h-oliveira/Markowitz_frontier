@@ -98,7 +98,7 @@ Abaixo, uma pequena animação da evolução temporal da fronteira eficiente. Ta
 
 <div style="text-align:center"><video width="320" height="240" controls>
   <source src="br_frontier_anime.mp4" type="video/mp4">
-</video></div>)
+</video></div>
 
 Podemos observar que a forma da fronteira eficiente muda bastante ao longo do tempo. Porém, como verificamos no Apêndice A, quando aplicamos o processo de otimização de Markowitz, a curva que resultado do processo uma hipérbole.
 
