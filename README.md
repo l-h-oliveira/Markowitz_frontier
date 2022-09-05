@@ -96,9 +96,9 @@ O ponto na cor roxa representa o ativo livre de risco, que tem um retorno médio
 Abaixo, uma pequena animação da evolução temporal da fronteira eficiente. Também estão marcados os ativos no portfólio, o ativo livre de risco e a alocação ideal $\alpha$.
 <!-- <div style="text-align:center"><img src = "br_fronteir_anime.gif" /></div> -->
 
-<!-- (vídeo da fronteira eficiente<div style="text-align:center"><video width="320" height="240" controls>
+<div style="text-align:center"><video width="320" height="240" controls>
   <source src="br_frontier_anime.mp4" type="video/mp4">
-</video></div>) -->
+</video></div>)
 
 Podemos observar que a forma da fronteira eficiente muda bastante ao longo do tempo. Porém, como verificamos no Apêndice A, quando aplicamos o processo de otimização de Markowitz, a curva que resultado do processo uma hipérbole.
 
