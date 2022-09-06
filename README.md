@@ -85,6 +85,8 @@ Geralmente utiliza-se a taxa básica de juros so país como ativo livre de risco
 
 <div style="text-align:center"><img src = "selic_br.png" /></div>
 
+## A Fronteira Eficiente e a Curvatura
+
 De posse dos retornos anuais da taxa Selic, podemos obter os respectivos retornos diários. E, por fim, obter os retornos médios livres de risco na janela de tempo utilizada.
 
 Utilizando o processo de otimização de Markowitz descrito no apêndice, podemos determinar a fronteira eficiente, que pode ser visualizada na cor preta na imagem abaixo. Incluímos também a data final da janela de tempo utilizada para calcular as médias e a alocação fornecida pelo processo de otimização. os valores negativos representam a operação de venda de ativos.
@@ -94,56 +96,14 @@ Utilizando o processo de otimização de Markowitz descrito no apêndice, podemo
 O ponto na cor roxa representa o ativo livre de risco, que tem um retorno médio positivo na janela de tempo utilizada (porém pequeno); o ponto na cor preta, sobre a fronteira eficiente representa o portfólio otimizado. Note que este é o ponto da fronteira eficiente cuja a reta que o une ao ativo livre de risco possui a maior inclinação (Sharpe ratio). Observe também, que a fronteira eficiente encapsula todos os ativo que compõem o portfólio.
 
 Abaixo, uma pequena animação da evolução temporal da fronteira eficiente. Também estão marcados os ativos no portfólio, o ativo livre de risco e a alocação ideal $\alpha$.
-<!-- <div style="text-align:center"><img src = "br_fronteir_anime.gif" /></div> -->
 
-<!-- (vídeo da fronteira eficiente<div style="text-align:center"><video width="320" height="240" controls>
-  <source src="br_frontier_anime.mp4" type="video/mp4">
-</video></div>) -->
-
-Podemos observar que a forma da fronteira eficiente muda bastante ao longo do tempo. Porém, como verificamos no Apêndice A, quando aplicamos o processo de otimização de Markowitz, a curva que resultado do processo uma hipérbole.
-
-Já que a fronteira eficiente é uma hipérbole. Podemos parametrizá-la, isto é, descrever suas coordenadas $(\sigma, \mu)$ usando um parâmetro $t$. Através de $t$, calculamos $\mu(t)$ e $\sigma(t)$ e marcamos cada ponto $(\sigma(t), \mu(t))$. De posse das parametrizações, podemos calcular a curvatura da hipérbole em casa ponto. Aqui, temos 3 pontos de interesse: o ponto da fronteira eficiente com a menor variância (o vértice da hipérbole); o ponto que representa o portfólio eficiente (que maximiza o Sharpe-ratio); e o ponto da fronteira eficiente com retorno nulo (isto é, quando a fronteira cruza o eixo horizontal).
-
-Abaixo, temos o valor da curvatura calculada no vértice da hipérbole ao longo do tempo. Podemos observar variações brucas em duas das quatro regiões destacadas.
-
-<div style="text-align:center"><img src = "k1_br_basket.png" /></div>
-
-Abaixo, temos o valor da curvatura calculado no ponto que representa o portfólio eficiente. Dentre os três casos, este é o que aprensenta maior quantidade de picos pronunciados. E foi sensível em algumas das áreas destacadas.
-
-<div style="text-align:center"><img src = "k2_br_basket.png" /></div>
-
-Por fim, temos o terceiro caso, quando a fronteira eficiente intercepta o eixo horizontal (retorno nulo). de maneira geral, podemos observar um comportamento semelhante ao primeiro caso, com picos pronunciados apenas nas duas primeiras regiões destacadas.
-
-<div style="text-align:center"><img src = "k3_br_basket.png" /></div>
-
-
-## A Fronteira Eficiente e a Curvatura (cesta americana)
-
-Para proceder a otimização de Markowitz na cesta americana, vamos utilizar como ativo livre de riscos os bonds americanos
+<div style="text-align:center"><img src = "br_fronteir_anime1.gif" /></div>
 
 <!--
-No Brasil, a taxa básica é a taxa Selic. No gráfico abaixo, podemos ver a evolução do retorno anual da taxa Selic.
-
-De posse dos retornos anuais da taxa Selic, podemos obter os respectivos retornos diários. E, por fim, obter os retornos médios livres de risco na janela de tempo utilizada.
-
-Utilizando o processo de otimização de Markowitz descrito no apêndice, podemos determinar a fronteira eficiente, que pode ser visualizada na cor preta na imagem abaixo. Incluímos também a data final da janela de tempo utilizada para calcular as médias e a alocação fornecida pelo processo de otimização. os valores negativos representam a operação de venda de ativos.
-
-<div style="text-align:center"><img src = "ef_br.png" /></div>
-
-O ponto na cor roxa representa o ativo livre de risco, que tem um retorno médio positivo na janela de tempo utilizada (porém pequeno); o ponto na cor preta, sobre a fronteira eficiente representa o portfólio otimizado. Note que este é o ponto da fronteira eficiente cuja a reta que o une ao ativo livre de risco possui a maior inclinação (Sharpe ratio). Observe também, que a fronteira eficiente encapsula todos os ativo que compõem o portfólio.
-
-Abaixo, uma pequena animação da evolução temporal da fronteira eficiente. Também estão marcados os ativos no portfólio, o ativo livre de risco e a alocação ideal $\alpha$.
-<!-- <div style="text-align:center"><img src = "br_fronteir_anime.gif" /></div> -->
-
-<!-- (vídeo da fronteira eficiente<div style="text-align:center"><video width="320" height="240" controls>
+<div style="text-align:center"><video width="320" height="240" controls>
   <source src="br_frontier_anime.mp4" type="video/mp4">
-</video></div>) 
-
-Podemos observar que a forma da fronteira eficiente muda bastante ao longo do tempo. Porém, como verificamos no Apêndice A, quando aplicamos o processo de otimização de Markowitz, a curva que resultado do processo uma hipérbole.
-
-Já que a fronteira eficiente é uma hipérbole. Podemos parametrizá-la, isto é, descrever suas coordenadas $(\sigma, \mu)$ usando um parâmetro $t$. Através de $t$, calculamos $\mu(t)$ e $\sigma(t)$ e marcamos cada ponto $(\sigma(t), \mu(t))$. De posse das parametrizações, podemos calcular a curvatura da hipérbole em casa ponto. Aqui, temos 3 pontos de interesse: o ponto da fronteira eficiente com a menor variância (o vértice da hipérbole); o ponto que representa o portfólio eficiente (que maximiza o Sharpe-ratio); e o ponto da fronteira eficiente com retorno nulo (isto é, quando a fronteira cruza o eixo horizontal).
-
-Abaixo, temos o valor da curvatura calculada no vértice da hipérbole ao longo do tempo. Podemos observar variações brucas em duas das quatro regiões destacadas.
+</video></div>
+-->
 
 <div style="text-align:center"><img src = "k1_br_basket.png" /></div>
 
@@ -154,7 +114,7 @@ Abaixo, temos o valor da curvatura calculado no ponto que representa o portfóli
 Por fim, temos o terceiro caso, quando a fronteira eficiente intercepta o eixo horizontal (retorno nulo). de maneira geral, podemos observar um comportamento semelhante ao primeiro caso, com picos pronunciados apenas nas duas primeiras regiões destacadas.
 
 <div style="text-align:center"><img src = "k3_br_basket.png" /></div>
--->
+
 ## Apêndice A: Otimização de Portifólios de Markowitz
 Um portfólio é definido através de um conjunto de ativos $A_1, A_2, ... , A_N$ e a respectiva alocação (percentual) $\alpha_1, \alpha_2, ... , \alpha_N$. Desse modo, $\alpha_1~+~\alpha_2~+~\cdots~+~\alpha_N~=~1$.
 
