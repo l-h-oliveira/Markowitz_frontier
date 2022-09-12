@@ -294,7 +294,7 @@ fig.savefig('usa_basket.png')
 
 
 # %%
-# Vamos calcular os retornos e variâncias de cada uma das ações na cesta brasileira
+# Vamos calcular os retornos e variâncias de cada uma das ações na cesta americana
 
 period = 50
 
