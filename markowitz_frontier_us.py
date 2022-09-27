@@ -31,7 +31,7 @@ font2 = {'size': 18}
 
 # importando dados
 period = 50
-stocks_data = pd.read_csv('stocks_data_br.csv')
+stocks_data = pd.read_csv('stocks_data_us.csv')
 #convertendo o índice no tipo datetime64
 stocks_data['Date'] = pd.to_datetime(stocks_data['Date'], dayfirst= True, yearfirst=True)
 stocks_data = stocks_data.set_index('Date')
@@ -44,12 +44,17 @@ index_data = index_data.set_index('Date')
 # Para obtermos o portfólio otimizado em relação ao Sharpe-ratio, precisamos do valor da taxa livre de risco naquele período. Vamos utilizar como de costume, a taxa selic
 
 # Obtendo dados da taxa livre de risco
-full_data = pd.read_csv('consulta_selic_b3.txt', sep='	', decimal=',')
+full_data = pd.read_csv('FRB_PRATES.csv', skiprows = 6, names = ['Date', 'IOER', 'IORR', 'IORB'])
+
+full_data.fillna(value = 0, inplace = True)
+
+full_data['Taxa SELIC'] = full_data['IORB'] + full_data['IORR']
+
+full_data.drop(columns = ['IOER', 'IORR', 'IORB'], inplace = True)
 
 # Transformando as dadas de texto para datetime
-full_data['Date'] = pd.to_datetime(full_data['Data'], dayfirst= True, yearfirst=True)
+full_data['Date'] = pd.to_datetime(full_data['Date'])
 
-full_data = full_data.drop(columns= 'Data')
 full_data = full_data.set_index('Date')
 
 # queremos calcular o retorno da taxa selic ao longo da nossa janela de tempo. Para isso, vamos calcular o produto cumulativo de (1 + x/100) com x sendo o respectivo retorno diário da taxa selic 
@@ -135,7 +140,7 @@ full_data['var_ef'] = (4*full_data['a']*full_data['c'] - full_data['b']**2)*(ful
 full_data['k3'] = (full_data['a']*full_data['c'] - full_data['b']**2/4)/(full_data['var_ef'] + (full_data['a']*full_data['r_ef'] + full_data['b']/2)**2)**(3/2)
 
 full_data = full_data.dropna()
-full_data.to_csv('full_data.csv')
+full_data.to_csv('full_data_us.csv')
 
 # %%
 # Plot  curvatura, cesta brasileira
@@ -154,7 +159,7 @@ for y in ['k1', 'k2', 'k3']:
     # ax.legend()
     plt.subplots_adjust(wspace = 0, hspace = 0)
     plt.show()
-    fig.savefig(y + '_br_basket.png')
+    fig.savefig(y + '_us_basket.png')
 
 
 # %%
@@ -193,7 +198,6 @@ ax.fill_between(var, mu_n, mu_p, facecolor = 'lightgray')
 t2 = np.linspace(0,5, 100)
 ax.plot(np.sqrt(full_data.loc[a, 'var_ef'])*t2, (full_data.loc[a, 'r_ef'] - full_data.loc[a, 'r_SELIC'])*t2 + full_data.loc[a, 'r_SELIC'], 'g', linestyle = 'dashed', linewidth = 4)
 
-
 # ponto portfólio eficiente
 ax.plot(np.sqrt(full_data.loc[a, 'var_ef']), full_data.loc[a, 'r_ef'], 'ok', markersize = 15)
 
@@ -205,15 +209,15 @@ aloc = list(map(float, filter(lambda x: x!= '', full_data.loc[a, 'aloc'][1:-1].s
 # ativos na cesta
 u = ''
 for i in range(len(my_tickers)):
-    ax.plot(np.sqrt(stocks_data.loc[a, var_cols[i]]), stocks_data.loc[a, mean_cols[i]], 'o', markersize = 15, label = my_tickers[i][:-3])
+    ax.plot(np.sqrt(stocks_data.loc[a, var_cols[i]]), stocks_data.loc[a, mean_cols[i]], 'o', markersize = 15, label = my_tickers[i])
 
     # Alocação
-    u = u + '(' + str(aloc[i]) + ')' + my_tickers[i][:-3] + ' + '
+    u = u + '(' + str(aloc[i]) + ')' + my_tickers[i] + ' + '
 
-ax.text(0.005, mu_n.min(), r'$\alpha \approx' + u[:-3] + '$', fontdict = {'size': 15})
+ax.text(0.5, mu_n.min(), r'$\alpha \approx' + u[:-3] + '$', fontdict = {'size': 15})
 
 # Data
-ax.text(0.005, mu_n.min() + 0.3, r'$' + a.strftime('%d/%m/%Y') + '$', fontdict = {'size': 15})
+ax.text(1, mu_n.min() + 10, r'$' + a.strftime('%d/%m/%Y') + '$', fontdict = {'size': 15})
 
 ax.axhline(0, color = 'gray')
 ax.set_xlabel(r'$\sigma$', fontdict = font1)
@@ -226,6 +230,6 @@ plt.xticks(fontsize = 18)
 plt.yticks(fontsize = 18)
 plt.subplots_adjust(wspace = 0, hspace = 0)
 plt.show()
-fig.savefig('ef_br.png')
+fig.savefig('ef_us.png')
 
 # %%

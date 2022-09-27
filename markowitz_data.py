@@ -372,6 +372,74 @@ plt.subplots_adjust(wspace = 0, hspace = 0)
 plt.show()
 fig.savefig('selic_br.png')
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# %% Obtendo dados da taxa livre de risco americana
+
+# dados extraídos de "https://www.federalreserve.gov/datadownload/Download.aspx?rel=PRATES&series=c27939ee810cb2e929a920a6bd77d9f6&filetype=csv&label=include&layout=seriescolumn&from=01/01/2008&to=05/31/2022", com frequência diária, data inicial '2008-01-01' e data final '2022-05-31'.
+
+# há uma mudança na forma como os dados são mostrados a partir do dia '2021-07-28'. No período anterior, as tínhamos  duas taxas (IOER) e (IORR), no período posterior, temos uma taxa (IORB). 
+abond_data = pd.read_csv('FRB_PRATES.csv', skiprows = 6, names = ['Date', 'IOER', 'IORR', 'IORB'])
+
+# Vamos utilizar como taxa livre de risco a taxa 'IORR' no período anterior a '2021-07-28' e a taxa 'IORB' no período posterior.
+abond_data.fillna(value = 0, inplace = True)
+
+abond_data['Taxa SELIC'] = abond_data['IORB'] + abond_data['IORR']
+
+# Transformando as dadas de texto para datetime
+abond_data['Date'] = pd.to_datetime(abond_data['Date'])
+
+# %%
+# plot evolução da taxa selic anual
+fig, ax = plt.subplots(nrows = 1, ncols = 1, figsize = (12,6))
+
+ax.plot(abond_data['Date'].values, abond_data['Taxa SELIC'].values, color = 'blue', linewidth = 3)
+
+# Áreas sombreadas
+# for x in [2008, 2015, 2011, 2020]:
+#         ax.axvspan(index_data.index.values[np.where(index_data.index.year.values == x)[0][0]], index_data.index.values[np.where(index_data.index.year.values == x)[0][-1]], facecolor = 'gray')
+
+
+ax.set_xlim([np.datetime64(dt(int(str(abond_data['Date'].values[0])[0:4]), int(str(abond_data['Date'].values[0])[5:7]), int(str(abond_data['Date'].values[0])[8:10])) - timedelta(days = 50)), np.datetime64(dt(int(str(abond_data['Date'].values[- 1])[0:4]), int(str(abond_data['Date'].values[-1])[5:7]), int(str(abond_data['Date'].values[-1])[8:10])) + timedelta(days = 50))])
+# ax.set_ylim([0, 1])
+
+ax.set_ylabel(r'$r (\%  \ Ano)$')
+ax.set_xlabel('Ano')
+# ax.legend()
+plt.subplots_adjust(wspace = 0, hspace = 0)
+plt.show()
+fig.savefig('abond_us.png')
+
 # %%
 # Salvando dados
 full_data.to_csv('full_data_br.csv')

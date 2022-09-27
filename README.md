@@ -17,16 +17,13 @@ Abaixo expomos dados históricos do índice Ibovespa (IBOV) e do índice S&P500.
 
 O histórico de preços encontra-se nomalizado pelo respectivo valor máximo alcançado por cada ativo, na respectiva moeda. Note que essa normalização não afeta a análise, pois não altera períodos onde ocorrem mudanças abruptas.
 
-<img src="indexes.png" 
-     style="float: left; margin-left: 10px;" />
+<div style="text-align:center"><img src = "indexes.png" /></div>
 
 Sobre o gráfico, destacamos alguns períodos onde ocorreram mudanças abruptas de preço nos dois índices. A seguir, vamos testar se a curvatura da fronteira eficiente obtida através da otimização de Markowitz expressa algum comportamento relevante nessas regiões.
 
 No gráfico abaixo, vemos o retorno médio de cada índice numa janela de 50 dias úteis (superior); e a variância dos retornos (inferior), na mesma janela de tempo.
 
-<img src="mean_and_var_indexes.png" 
-     style="float: left; margin-left: 10px;" />
-
+<div style="text-align:center"><img src = "mean_and_var_indexes.png" /></div>
 
 Podemos observar que o índice S&P500 entregaram um retorno maior que o índice Ibovespa. Além disso, o gráfico da variância atesta que o índice Ibovespa está sujeito a oscilações maiores e mais frequentes que o índice S&P500, como pode ser observado no gráfico dos históricos de preços.
 ## Cestas de Ativos
@@ -37,13 +34,11 @@ Agora, vamos escolher quatro ativos presentes em cada um dos índices. Vamos exi
 
 A seguir o histórico de preços normalizados de quatro empresas brasileiras: Petrobrás, Vale, Itaúsa e Bradesco. 
 
-<img src="brasilian_basket.png" 
-     style="float: left; margin-left: 10px;" />
+<div style="text-align:center"><img src = "brasilian_basket.png" /></div>
 
 No gráfico abaixo, assim como fizemos para os índices, temos os retornos acumulados e as variâncias para as ações na cesta brasileira.
 
-<img src="mean_and_var_brasilian_basket.png" 
-     style="float: left; margin-left: 10px;" />
+<div style="text-align:center"><img src = "mean_and_var_brasilian_basket.png" /></div>
 
 Primeiramente, podemos observar que ação com maior retorno é a da empresa Vale. É também a que possui maior variância. Esta possui um pico muito expressivo em 2020, provavelmente em virtude da oscilação de preços causada pela pandemia do corona vírus.
 
@@ -57,13 +52,11 @@ Podemos observar correlações elevadas entre  Banco Bradesco e Itaúsa e entre 
 
 A seguir o histórico de preços normalizados de quatro empresas estadunidenses: Google, Mycrosoft, Amazon e Coca-Cola. 
 
-<img src="usa_basket.png" 
-     style="float: left; margin-left: 10px;" />
+<div style="text-align:center"><img src = "usa_basket.png" /></div>
 
 No gráfico abaixo, assim como fizemos para os índices, temos os retornos acumulados e as variâncias para as ações na cesta brasileira.
 
-<img src="mean_and_var_usa_basket.png" 
-     style="float: left; margin-left: 10px;" />
+<div style="text-align:center"><img src = "mean_and_var_usa_basket.png" /></div>
 
 Primeiramente, podemos observar que ação com maior retorno é a da empresa Vale. É também a que possui maior variância. Esta possui um pico muito expressivo em 2020, provavelmente em virtude da oscilação de preços causada pela pandemia do corona vírus.
 
@@ -115,8 +108,44 @@ Por fim, temos o terceiro caso, quando a fronteira eficiente intercepta o eixo h
 
 <div style="text-align:center"><img src = "k3_br_basket.png" /></div>
 
+## A Fronteira Eficiente e a Curvatura (cesta americana)
+
+Para a cesta de ativos americana, vamos utilizar como ativo livre de risco, a taxa de juros estipulada pelo Federal Reserve (FED). Disponível [neste link](https://www.federalreserve.gov/datadownload/Download.aspx?rel=PRATES&series=c27939ee810cb2e929a920a6bd77d9f6&filetype=csv&label=include&layout=seriescolumn&from=01/01/2008&to=05/31/2022). Nessa fonte, temos dados disponíveis a partir de 28/10/2008.
+
+<div style="text-align:center"><img src = "abond_us.png" /></div>
+
+## A Fronteira Eficiente e a Curvatura
+
+De posse dos retornos anuais da taxa do FED, podemos obter os respectivos retornos diários. E, por fim, obter os retornos médios livres de risco na janela de tempo utilizada.
+
+Utilizando o processo de otimização de Markowitz descrito no apêndice, podemos determinar a fronteira eficiente, que pode ser visualizada na cor preta na imagem abaixo. Incluímos também a data final da janela de tempo utilizada para calcular as médias e a alocação fornecida pelo processo de otimização. Os valores negativos da alocação representam a operações de venda dos respectivos ativos.
+
+<div style="text-align:center"><img src = "ef_us.png" /></div>
+
+O ponto na cor roxa representa o ativo livre de risco, que tem um retorno médio positivo na janela de tempo utilizada (Apesar de não ficar claro na figura, o retorno do ativo livre de risco americano é nominalmente menor que o retorno do ativo livre de risco brasileiro); o ponto na cor preta, sobre a fronteira eficiente representa o portfólio otimizado. Note que este é o ponto da fronteira eficiente cuja a reta que o une ao ativo livre de risco possui a maior inclinação (Sharpe ratio). Observe também, que a fronteira eficiente encapsula todos os ativo que compõem o portfólio.
+
+Abaixo, uma pequena animação da evolução temporal da fronteira eficiente. Também estão marcados os ativos no portfólio, o ativo livre de risco e a alocação ideal $\alpha$.
+
+<div style="text-align:center"><img src = "us_fronteir_anime1.gif" /></div>
+
+<!--
+<div style="text-align:center"><video width="320" height="240" controls>
+  <source src="br_frontier_anime.mp4" type="video/mp4">
+</video></div>
+-->
+
+<div style="text-align:center"><img src = "k1_us_basket.png" /></div>
+
+Abaixo, temos o valor da curvatura calculado no ponto que representa o portfólio eficiente. Dentre os três casos, este é o que aprensenta maior quantidade de picos pronunciados. E foi sensível em algumas das áreas destacadas.
+
+<div style="text-align:center"><img src = "k2_us_basket.png" /></div>
+
+Por fim, temos o terceiro caso, quando a fronteira eficiente intercepta o eixo horizontal (retorno nulo). de maneira geral, podemos observar um comportamento semelhante ao primeiro caso, com picos pronunciados apenas nas duas primeiras regiões destacadas.
+
+<div style="text-align:center"><img src = "k3_us_basket.png" /></div>
+
 ## Apêndice A: Otimização de Portifólios de Markowitz
-Um portfólio é definido através de um conjunto de ativos $A_1, A_2, ... , A_N$ e a respectiva alocação (percentual) $\alpha_1, \alpha_2, ... , \alpha_N$. Desse modo, $\alpha_1~+~\alpha_2~+~\cdots~+~\alpha_N~=~1$.
+Um portfólio é definido através de um conjunto de ativos $A_1, A_2, ... , A_N$ e a respectiva alocação (percentual) $\alpha_1, \alpha_2, ... , \alpha_N$. Desse modo, $\alpha_1 + \alpha_2 + \cdots + \alpha_N = 1$.
 
 Então, **retorno do portfólio** $(\mu)$ é dado pela média ponderada dos retornos individuais
 
