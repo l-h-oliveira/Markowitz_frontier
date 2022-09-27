@@ -70,7 +70,7 @@ Podemos observar correlações elevadas entre  Banco Bradesco e Itaúsa e entre 
 Para utilizar o processo de otimização de Markowitz na forma mais básica, devemos fixar um valor para retorno e obter uma alocação que minimize a variância do portfólio. Entretanto, podemos adicionar um vínculo: obter o portfólio que maximize o Sharpe ratio, que é definido por
 
 $$SR(M) =  \frac{\mu_M - r}{\sigma_M},$$
-onde $r$ é o retorno de um ativo livre de risco (&#8203;$\sigma^2=0$&#8203;), $\mu_M$ é o retorno do portfólio e $\sigma_M$ seu desvio-padrão.
+onde $r$ é o retorno de um ativo livre de risco, o ativo com $\sigma^2=0$, $\mu_M$ é o retorno do portfólio e $\sigma_M$ seu desvio-padrão.
 
 ## A Fronteira Eficiente e a Curvatura (cesta brasileira)
 
@@ -168,7 +168,7 @@ Se os ativos não têm correlação, temos $\rho_{12} = 0$. E a variância do po
 $$ \sigma^2 = \alpha_1^2\sigma_1^2 + \alpha_2^2\sigma_2^2 + \cdots + \alpha_N^2\sigma_N^2.$$
 
 Podemos formular dois problemas de otimização. Nos dois casos, o intuito é encontrar as alocações $(\alpha_1, \alpha_2, ..., \alpha_N)$ que satisfazem as condições. São eles
-1. Maximizar o retorno $ \alpha_1\mu_1 + \alpha_2\mu_2 + \cdots \alpha_N\mu_N $ e fixar a variância, ou seja, temos $\vec{\alpha}^t \Sigma \vec{\alpha} = \sigma_0^2 $;
+1. Maximizar o retorno $\alpha_1\mu_1+\alpha_2\mu_2+\cdots\alpha_N\mu_N$ e fixar a variância, ou seja, temos $\vec{\alpha}^t \Sigma \vec{\alpha} = \sigma_0^2 $;
 
 2. Minimizar a variância $ \vec{\alpha}^t \Sigma \vec{\alpha} $ e fixar um retorno $ \alpha_1\mu_1 + \alpha_2\mu_2 + \cdots \alpha_N\mu_N = \mu_0 $.
 
