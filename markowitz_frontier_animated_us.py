@@ -56,8 +56,8 @@ var_cols = list(filter(lambda x: x[:3] == 'var', stocks_data.columns))
 ''' Precisamos fixar os limites dos eixos. Para isso, precisamos obter os valores máximos da fronteira eficiente, através do parâmetro t.
 '''
 # limite de dados utilizados na animação
-lim = full_data.shape[0]
-# lim = 20
+# lim = full_data.shape[0]
+lim = 3000
 
 # valor máximo do desvio-padrão
 dom = full_data.index[:lim]
