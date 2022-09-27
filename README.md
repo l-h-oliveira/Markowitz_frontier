@@ -70,7 +70,7 @@ Podemos observar correlações elevadas entre  Banco Bradesco e Itaúsa e entre 
 Para utilizar o processo de otimização de Markowitz na forma mais básica, devemos fixar um valor para retorno e obter uma alocação que minimize a variância do portfólio. Entretanto, podemos adicionar um vínculo: obter o portfólio que maximize o Sharpe ratio, que é definido por
 
 $$SR(M) =  \frac{\mu_M - r}{\sigma_M},$$
-onde $r$ é o retorno de um ativo livre de risco ( $\sigma^2=0$ ), $\mu_M$ é o retorno do portfólio e $\sigma_M$ seu desvio-padrão.
+onde $r$ é o retorno de um ativo livre de risco (&#8203;$\sigma^2=0$&#8203;), $\mu_M$ é o retorno do portfólio e $\sigma_M$ seu desvio-padrão.
 
 ## A Fronteira Eficiente e a Curvatura (cesta brasileira)
 
