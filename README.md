@@ -198,11 +198,11 @@ Com isso, obtemos um sistema de equações que nos permite obter $\lambda_1$ e $
 
 Note que se conhecemos $\alpha$ podemos obter a variância do portifólio, $\sigma^2=\vec{\alpha}^t\Sigma\vec{\alpha}$, em função de um retorno $\mu_0$ fixado. Utilizando as expressões para $\vec{\alpha}$ podemos mostrar que
 
-$$\sigma^2=\begin{pmatrix}\lambda_1&\lambda_2\end{pmatrix}\begin{pmatrix}\vec{\mu}^t\Sigma^{-1}\mu&\vec{\mu}^t\Sigma^{-1}\vec{1}\\ \vec{\mu}^t\Sigma^{-1}\vec{1}&\vec{1}^t\Sigma^{-1}\vec{1}\end{pmatrix}\begin{pmatrix}\lambda_1\\ \lambda_2\end{pmatrix},$$
+$$ \sigma^2 = \begin{pmatrix} \lambda_1 & \lambda_2 \end{pmatrix} \begin{pmatrix} \vec{\mu}^t \Sigma^{-1} \mu & \vec{\mu}^t \Sigma^{-1} \vec{1} \\  \vec{\mu}^t \Sigma^{-1} \vec{1} & \vec{1}^t \Sigma^{-1} \vec{1} \end{pmatrix} \begin{pmatrix} \lambda_1 \\ \lambda_2 \end{pmatrix}, $$
 
 que por sua vez podem ser expressos em função do retorno fixado, $\mu_0$,
 
-$$\sigma^2=\begin{pmatrix}\mu_0&1\end{pmatrix}\begin{pmatrix}\vec{\mu}^t\Sigma^{-1}\mu&\vec{\mu}^t\Sigma^{-1}\vec{1}\\ \vec{\mu}^t\Sigma^{-1}\vec{1}&\vec{1}^t\Sigma^{-1}\vec{1}\end{pmatrix}^{-1}\begin{pmatrix}\mu_0\\ 1\end{pmatrix}.$$
+$$ \sigma^2 = \begin{pmatrix} \mu_0 & 1 \end{pmatrix} \begin{pmatrix} \vec{\mu}^t \Sigma^{-1} \mu & \vec{\mu}^t \Sigma^{-1} \vec{1} \\  \vec{\mu}^t \Sigma^{-1} \vec{1} & \vec{1}^t \Sigma^{-1} \vec{1} \end{pmatrix}^{-1} \begin{pmatrix} \mu_0 \\ 1 \end{pmatrix}. $$
 
 Dessa forma, obtemos uma curva no plano $\sigma\times\mu_0$, a **fronteira eficiente**. Pode-se mostrar que essa curva é um hipérbole e que encapsula todos os pontos que representam os ativos que compõem o portfólio.
 
@@ -218,11 +218,11 @@ $$ \mu^\prime=\frac{\mu-r}{\sigma}\quad\textrm{ com }\quad\sigma^2=a\mu^2+b\mu+c
 
 Derivando implicitamente a equação da fronteira eficiente, conseguimos encontrar uma expressão para $\mu^\prime$, e obter duas equações para podermos encontrar o retorno e o desvio padrão do ativo otimizado
 
-$$\begin{cases}\sigma^2=a\mu^2+b\mu+c\\ 2\sigma^2=2a\mu^2+\left(b-2ra\right)\mu-rb\end{cases}.$$
+$$ \begin{cases} \sigma^2 = a\mu^2+b\mu+c \\ 2\sigma^2 = 2a\mu^2+ \left(b-2ra\right)\mu-rb \end{cases}. $$
 
 Resolvendo as equações, encontramos o retorno e a variância do ativo otimizado
 
-$$\mu=-\frac{rb+2c}{2ra+b}\quad\textrm{ e }\quad\sigma^2=\frac{\left(4ac-b^2\right)}{\left(2ra+b\right)^2}\left(ar^2+br+c\right).$$
+$$ \mu = -\frac{rb+2c}{2ra+b}\quad\textrm{ e }\quad\sigma^2=\frac{\left(4ac-b^2\right)}{\left(2ra+b\right)^2}\left(ar^2+br+c\right).$$
 
 ## Apêndice B: A Curvatura de uma Hipérbole
 
@@ -232,7 +232,7 @@ $$\sigma^2=a\mu^2+b\mu+c,\textrm{com }a>0.$$
 
 Para obter a curvatura dessa curva, primeiro devemos obter uma **parametrização** da mesma. Ou seja, duas funções de um mesmo parâmetro, $t$, que fornecem um ponto da curva, $\left(\mu\left(t\right),\sigma\left(t\right)\right)$. Utilizando as funções trigonométricas, podemos definir
 
-$$\begin{cases}\mu(t)=\sqrt{\frac{c}{a}-\frac{b^2}{4a^2}}\sinh (t)-\frac{b}{2a}\\ \sigma(t)=\sqrt{c-\frac{b^2}{4a}}\cosh(t)\end{cases}.$$
+$$\begin{cases} \mu(t) =\sqrt{\frac{c}{a} - \frac{b^2}{4a^2}}\sinh (t)-\frac{b}{2a} \\ \sigma(t)=\sqrt{c-\frac{b^2}{4a}}\cosh(t) \end{cases}.$$
 
 Sabendo que $\cosh^2(t)-\sinh^2(t)=1$, a equação da fronteira eficiente é naturalmente satisfeita. Temos portanto uma parametrização.
 
