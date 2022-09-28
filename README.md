@@ -191,18 +191,30 @@ $$\mu_0=\vec{\alpha}^t\vec{\mu}=\lambda_1\vec{\mu}^t\Sigma^{-1}\mu+\lambda_2\vec
 $$1=\vec{\alpha}^t\vec{1}=\lambda_1\vec{\mu}^t\Sigma^{-1}\vec{1}+\lambda_2\vec{1}^t\Sigma^{-1}\vec{1}.$$
 
 Na forma matricial,
+
 <!-- $$\begin{pmatrix}\vec{\mu}^t\Sigma^{-1}\mu&\vec{\mu}^t\Sigma^{-1}\vec{1}\\ \vec{\mu}^t\Sigma^{-1}\vec{1}&\vec{1}^t\Sigma^{-1}\vec{1}\end{pmatrix}\begin{pmatrix} \lambda_1\\ \lambda_2\end{pmatrix}=\begin{pmatrix}\mu_0\\ 1\end{pmatrix}.$$ -->
-<div style="text-align:center"><img src = "equation1.png" /></div>
+
+<p align="center">
+<img src = "equation1.png" />
+</p>
 
 Com isso, obtemos um sistema de equações que nos permite obter $\lambda_1$ e $\lambda_2$ e, com isso, calcular as alocações do portfólio eficiente.
 
 Note que se conhecemos $\alpha$ podemos obter a variância do portifólio, $\sigma^2=\vec{\alpha}^t\Sigma\vec{\alpha}$, em função de um retorno $\mu_0$ fixado. Utilizando as expressões para $\vec{\alpha}$ podemos mostrar que
 
-$$ \sigma^2 = \begin{pmatrix} \lambda_1 & \lambda_2 \end{pmatrix} \begin{pmatrix} \vec{\mu}^t \Sigma^{-1} \mu & \vec{\mu}^t \Sigma^{-1} \vec{1} \\  \vec{\mu}^t \Sigma^{-1} \vec{1} & \vec{1}^t \Sigma^{-1} \vec{1} \end{pmatrix} \begin{pmatrix} \lambda_1 \\ \lambda_2 \end{pmatrix}, $$
+<!-- $$ \sigma^2 = \begin{pmatrix} \lambda_1 & \lambda_2 \end{pmatrix} \begin{pmatrix} \vec{\mu}^t \Sigma^{-1} \mu & \vec{\mu}^t \Sigma^{-1} \vec{1} \\  \vec{\mu}^t \Sigma^{-1} \vec{1} & \vec{1}^t \Sigma^{-1} \vec{1} \end{pmatrix} \begin{pmatrix} \lambda_1 \\ \lambda_2 \end{pmatrix}, $$ -->
+
+<p align="center">
+<img src = "equation2.png" />
+</p>
 
 que por sua vez podem ser expressos em função do retorno fixado, $\mu_0$,
 
-$$ \sigma^2 = \begin{pmatrix} \mu_0 & 1 \end{pmatrix} \begin{pmatrix} \vec{\mu}^t \Sigma^{-1} \mu & \vec{\mu}^t \Sigma^{-1} \vec{1} \\  \vec{\mu}^t \Sigma^{-1} \vec{1} & \vec{1}^t \Sigma^{-1} \vec{1} \end{pmatrix}^{-1} \begin{pmatrix} \mu_0 \\ 1 \end{pmatrix}. $$
+<! --$$ \sigma^2 = \begin{pmatrix} \mu_0 & 1 \end{pmatrix} \begin{pmatrix} \vec{\mu}^t \Sigma^{-1} \mu & \vec{\mu}^t \Sigma^{-1} \vec{1} \\  \vec{\mu}^t \Sigma^{-1} \vec{1} & \vec{1}^t \Sigma^{-1} \vec{1} \end{pmatrix}^{-1} \begin{pmatrix} \mu_0 \\ 1 \end{pmatrix}. $$ -->
+
+<p align="center">
+<img src = "equation3.png" />
+</p>
 
 Dessa forma, obtemos uma curva no plano $\sigma\times\mu_0$, a **fronteira eficiente**. Pode-se mostrar que essa curva é um hipérbole e que encapsula todos os pontos que representam os ativos que compõem o portfólio.
 
