@@ -1,9 +1,7 @@
 # %%
 import numpy as np
 import matplotlib.pyplot as plt
-import seaborn as sns
 import pandas as pd
-import yfinance as yf
 from datetime import datetime as dt
 import matplotlib.animation as anime
 
@@ -56,8 +54,8 @@ var_cols = list(filter(lambda x: x[:3] == 'var', stocks_data.columns))
 ''' Precisamos fixar os limites dos eixos. Para isso, precisamos obter os valores máximos da fronteira eficiente, através do parâmetro t.
 '''
 # limite de dados utilizados na animação
-# lim = full_data.shape[0]
-lim = 3000
+lim = full_data.shape[0]
+# lim = 30
 
 # valor máximo do desvio-padrão
 dom = full_data.index[:lim]
@@ -72,7 +70,6 @@ fig, ax = plt.subplots(nrows = 1, ncols = 1, figsize = (13,6))
 def fronteira(p):
     # Limpando a figura para o próximo frame
     ax.cla()
-    print(p)
     a = full_data.index[p]
 
     ### obtendo a fronteira eficiente usando as parametrizações.
@@ -127,7 +124,7 @@ def fronteira(p):
 
     # axis limits
     ax.set_xlim(0, dp_max)
-    ax.set_ylim(0, 2.4)
+    ax.set_ylim(0, 12)
     
     # axis labels
     ax.set_xlabel(r'$\sigma$', fontdict = font1)
@@ -147,8 +144,9 @@ animation = anime.FuncAnimation(fig, func = fronteira, frames = range(lim), inte
 
 # Vídeo
 writervideo = anime.PillowWriter(fps = 45)
-animation.save('us_fronteir_anime.gif', writer=writervideo)
+animation.save('fronteir_anime_us.gif', writer=writervideo)
 
+plt.show()
 plt.close()
 
 

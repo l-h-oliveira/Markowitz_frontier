@@ -90,7 +90,7 @@ onde $r$ é o retorno de um ativo livre de risco, o ativo com $\sigma^2=0$, $\mu
 
 ## A Fronteira Eficiente e a Curvatura (cesta brasileira)
 
-Geralmente utiliza-se a taxa básica de juros so país como ativo livre de risco. No Brasil, a taxa básica é a taxa Selic. No gráfico abaixo, podemos ver a evolução do retorno anual da taxa Selic.
+Geralmente utiliza-se a taxa básica de juros so país como ativo livre de risco. No Brasil, a taxa básica é a taxa Selic. O rendimento anual da taxa Selic em exercício no dia pode ser obtido através desse [link](http://estatisticas.cetip.com.br/astec/series_v05/paginas/lum_web_v05_template_informacoes_di.asp?str_Modulo=completo&int_Idioma=1&int_Titulo=6&int_NivelBD=2). No gráfico abaixo, podemos ver a evolução do retorno anual da taxa Selic.
 
 <p align="center">
 <img src = "selic_br.png" />
@@ -108,29 +108,31 @@ Utilizando o processo de otimização de Markowitz descrito no apêndice, podemo
 
 O ponto na cor roxa representa o ativo livre de risco, que tem um retorno médio positivo na janela de tempo utilizada (porém pequeno); o ponto na cor preta, sobre a fronteira eficiente representa o portfólio otimizado. Note que este é o ponto da fronteira eficiente cuja a reta que o une ao ativo livre de risco possui a maior inclinação (Sharpe ratio). Observe também, que a fronteira eficiente encapsula todos os ativo que compõem o portfólio.
 
-Abaixo, uma pequena animação da evolução temporal da fronteira eficiente. Também estão marcados os ativos no portfólio, o ativo livre de risco e a alocação ideal $\alpha$.
+<!-- Abaixo, uma pequena animação da evolução temporal da fronteira eficiente. Também estão marcados os ativos no portfólio, o ativo livre de risco e a alocação ideal $\alpha$.
 
 <p align="center">
 <img src = "br_fronteir_anime1.gif" />
 </p>
 
-<!--
+
 <div style="text-align:center"><video width="320" height="240" controls>
   <source src="br_frontier_anime.mp4" type="video/mp4">
 </video></div>
 -->
 
+Abaixo, graficamos o valor da curvatura no vértice da hipérbole. Podemos observar picos pronunciados nas duas primeiras áreas sombreadas.
+
 <p align="center">
 <img src = "k1_br_basket.png" />
 </p>
 
-Abaixo, temos o valor da curvatura calculado no ponto que representa o portfólio eficiente. Dentre os três casos, este é o que aprensenta maior quantidade de picos pronunciados. E foi sensível em algumas das áreas destacadas.
+Abaixo, temos o valor da curvatura calculado no ponto que representa o portfólio eficiente. Podemos observar uma semelhança com o primeiro caso. Isto é justificado pela proximidade entre esses dois pontos, ou seja, o ponto que representa o portfólio eficiente ocorre próximo ao vértice da hipérbole.
 
 <p align="center">
 <img src = "k2_br_basket.png" />
 </p>
 
-Por fim, temos o terceiro caso, quando a fronteira eficiente intercepta o eixo horizontal (retorno nulo). de maneira geral, podemos observar um comportamento semelhante ao primeiro caso, com picos pronunciados apenas nas duas primeiras regiões destacadas.
+Por fim, temos o terceiro caso, quando a fronteira eficiente intercepta o eixo horizontal (retorno nulo). Este caso se distancia dos outros dois, pois os pontos não estão próximos. É interessante notar que há picos pronunciados em todas as áreas sombreadas. Este caso, merecia um estudo cuidadoso a fim de estabelecer uma estratégia utilizando-o como sinal de operação.
 
 <p align="center">
 <img src = "k3_br_basket.png" />
@@ -148,37 +150,38 @@ Para a cesta de ativos americana, vamos utilizar como ativo livre de risco, a ta
 
 De posse dos retornos anuais da taxa do FED, podemos obter os respectivos retornos diários. E, por fim, obter os retornos médios livres de risco na janela de tempo utilizada.
 
-Utilizando o processo de otimização de Markowitz descrito no apêndice, podemos determinar a fronteira eficiente, que pode ser visualizada na cor preta na imagem abaixo. Incluímos também a data final da janela de tempo utilizada para calcular as médias e a alocação fornecida pelo processo de otimização. Os valores negativos da alocação representam a operações de venda dos respectivos ativos.
+Utilizando o processo de otimização de Markowitz descrito no apêndice A, podemos determinar a fronteira eficiente, que pode ser visualizada na cor preta na imagem abaixo. Incluímos também a data final da janela de tempo utilizada para calcular as médias e a alocação fornecida pelo processo de otimização. Os valores negativos da alocação representam a operações de venda dos respectivos ativos.
 
 <p align="center">
 <img src = "ef_us.png" />
 </p>
 
-O ponto na cor roxa representa o ativo livre de risco, que tem um retorno médio positivo na janela de tempo utilizada (Apesar de não ficar claro na figura, o retorno do ativo livre de risco americano é nominalmente menor que o retorno do ativo livre de risco brasileiro); o ponto na cor preta, sobre a fronteira eficiente representa o portfólio otimizado. Note que este é o ponto da fronteira eficiente cuja a reta que o une ao ativo livre de risco possui a maior inclinação (Sharpe ratio). Observe também, que a fronteira eficiente encapsula todos os ativo que compõem o portfólio.
+O ponto na cor roxa representa o ativo livre de risco, que tem um retorno médio positivo na janela de tempo utilizada (Apesar de não ficar claro na figura, o retorno do ativo livre de risco americano é nominalmente menor que o retorno do ativo livre de risco brasileiro); o ponto na cor preta sobre a fronteira eficiente representa o portfólio otimizado. Note que este é o ponto da fronteira eficiente cuja a reta que o une ao ativo livre de risco possui a maior inclinação (Sharpe ratio). Observe também, que a fronteira eficiente encapsula todos os ativo que compõem o portfólio.
 
-Abaixo, uma pequena animação da evolução temporal da fronteira eficiente. Também estão marcados os ativos no portfólio, o ativo livre de risco e a alocação ideal $\alpha$.
+<!-- Abaixo, uma pequena animação da evolução temporal da fronteira eficiente. Também estão marcados os ativos no portfólio, o ativo livre de risco e a alocação ideal $\alpha$.
 
 <p align="center">
 <img src = "us_fronteir_anime1.gif" />
 </p>
 
-<!--
 <div style="text-align:center"><video width="320" height="240" controls>
   <source src="br_frontier_anime.mp4" type="video/mp4">
 </video></div>
 -->
 
+Abaixo, graficamos o valor da curvatura no vértice da hipérbole, ou seja, o ponto que resulta de impor $t=0$ na parametrização.Infelizmente, os dados obtidos na fonte não contemplam o ao de 2008 como um todo, começam no dia 28/10/2008. Assim, não podemos inferir o comportamento da curvatura nesse horizonte. Mas é interessante notar que, assim como a cesta de ativos brasileira, a curvatura resultante apresenta poucos picos pronunciados após 2012.
+
 <p align="center">
 <img src = "k1_us_basket.png" />
 </p>
 
-Abaixo, temos o valor da curvatura calculado no ponto que representa o portfólio eficiente. Dentre os três casos, este é o que aprensenta maior quantidade de picos pronunciados. E foi sensível em algumas das áreas destacadas.
+Abaixo, temos o valor da curvatura calculado no ponto que representa o portfólio eficiente. Assim como na cesta brasileira, o pontos que representam o vértice da hipérbole e o portfólio eficiente são próximos. Isto produz resultados muito semelhantes para a curvatura nesses dois casos.
 
 <p align="center">
 <img src = "k2_us_basket.png" />
 </p>
 
-Por fim, temos o terceiro caso, quando a fronteira eficiente intercepta o eixo horizontal (retorno nulo). de maneira geral, podemos observar um comportamento semelhante ao primeiro caso, com picos pronunciados apenas nas duas primeiras regiões destacadas.
+Por fim, temos o terceiro caso, quando a fronteira eficiente intercepta o eixo horizontal (retorno nulo). Vale ressaltar que há picos ao longo de todo período, apesar de os picos mais pronunciados ocorren antes de 2012, em contraste com a cesta de ativos brasileiros que, nesse caso, possui picos pronunciados no período posterior a 2012.
 
 <p align="center">
 <img src = "k3_us_basket.png" />
