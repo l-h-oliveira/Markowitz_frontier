@@ -128,7 +128,7 @@ full_data['k1'] = full_data['a']/np.sqrt(full_data['c'] - full_data['b']**2/full
 
 # cálculo da curvatura no ponto em que o retorno do ponto na fronteira eficiente é nulo, ou seja, ponto em que a hipérbole cruza o eixo do desvio-padrão
 
-full_data['k2'] = (full_data['a']*full_data['c'] - full_data['b']**2/4)/((4*full_data['a']*full_data['c'] + full_data['b']**2)/(4*full_data['a']) +  full_data['b']**2/4)
+full_data['k3'] = (full_data['a']*full_data['c'] - full_data['b']**2/4)/((full_data['c'] +  full_data['b']**2/4)**(3/2))
 
 
 # cálculo do retorno e variância do portfólio eficiente
@@ -137,13 +137,13 @@ full_data['r_ef'] = -(full_data['r_SELIC']*full_data['b'] + 2*full_data['c'])/(2
 full_data['var_ef'] = (4*full_data['a']*full_data['c'] - full_data['b']**2)*(full_data['a']*full_data['r_SELIC']**2 + full_data['b']*full_data['r_SELIC'] + full_data['c'])/(2*full_data['r_SELIC']*full_data['a'] + full_data['b'])**2
 
 # cálculo da curvatura da hipérbole no portfólio eficiente
-full_data['k3'] = (full_data['a']*full_data['c'] - full_data['b']**2/4)/(full_data['var_ef'] + (full_data['a']*full_data['r_ef'] + full_data['b']/2)**2)**(3/2)
+full_data['k2'] = (full_data['a']*full_data['c'] - full_data['b']**2/4)/(full_data['var_ef'] + (full_data['a']*full_data['r_ef'] + full_data['b']/2)**2)**(3/2)
 
 full_data = full_data.dropna()
 full_data.to_csv('full_data_us.csv')
 
 # %%
-# Plot  curvatura, cesta brasileira
+# Plot  curvatura, cesta americana
 for y in ['k1', 'k2', 'k3']:
     fig, ax = plt.subplots(nrows = 1, ncols = 1, figsize = (12,6))
 

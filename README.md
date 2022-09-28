@@ -319,6 +319,12 @@ Vamos nos referir a ela como $k_1(\mu, \sigma)$. Podemos ainda expressar a curva
 $$k(\mu,\sigma)=\frac{ac-\frac{b^2}{4}}{\left(\sigma^2+\left(a\mu+\frac{b}{2}\right)^2\right)^{\frac{3}{2}}}.$$
 Isto nos permitirá calcular a curvatura no ponto que representa o portfólio eficiente. Vamos nos referir a ela como $k_2(\mu, \sigma)$.
 
-Por fim, podemos nos perguntar como é a curvatura no ponto em que a fronteira eficiente intercepta o eixo das abscissas. Isto é, quando $\mu(t)=0$. Isto nos permite obter o respectivo valor de $t$ e, em seguida, a variância desse ponto:
-$$\sigma^2=\frac{4ac+b^2}{4a}.$$
-E assim, conseguimos obter a curvatura da hipérbole nesse ponto. Vamos nos referir a ela como $k_3(\mu, \sigma)$.
+Por fim, podemos nos perguntar como é a curvatura no ponto em que a fronteira eficiente intercepta o eixo das abscissas. Isto é, quando $\mu(t)=0$. Isto nos permite obter o respectivo valor de $t$ e, em seguida, utilizando propriedades das funções trigonométricas hiperbólicas, a variância desse ponto:
+
+$$\sigma^2=c.$$
+
+E assim, conseguimos obter a curvatura da hipérbole nesse ponto.
+
+$$k(\mu,\sigma)=\frac{ac-\frac{b^2}{4}}{\left(c+\frac{b^2}{4}\right)^{\frac{3}{2}}}.$$
+
+Vamos nos referir a ela como $k_3(\mu, \sigma)$.
