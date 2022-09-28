@@ -17,13 +17,17 @@ Abaixo expomos dados históricos do índice Ibovespa (IBOV) e do índice S&P500.
 
 O histórico de preços encontra-se nomalizado pelo respectivo valor máximo alcançado por cada ativo, na respectiva moeda. Note que essa normalização não afeta a análise, pois não altera períodos onde ocorrem mudanças abruptas.
 
-<div style="text-align:center"><img src = "indexes.png" /></div>
+<p align="center">
+<img src = "indexes.png" />
+</p>
 
 Sobre o gráfico, destacamos alguns períodos onde ocorreram mudanças abruptas de preço nos dois índices. A seguir, vamos testar se a curvatura da fronteira eficiente obtida através da otimização de Markowitz expressa algum comportamento relevante nessas regiões.
 
 No gráfico abaixo, vemos o retorno médio de cada índice numa janela de 50 dias úteis (superior); e a variância dos retornos (inferior), na mesma janela de tempo.
 
-<div style="text-align:center"><img src = "mean_and_var_indexes.png" /></div>
+<p align="center">
+<img src = "mean_and_var_indexes.png" />
+</p>
 
 Podemos observar que o índice S&P500 entregaram um retorno maior que o índice Ibovespa. Além disso, o gráfico da variância atesta que o índice Ibovespa está sujeito a oscilações maiores e mais frequentes que o índice S&P500, como pode ser observado no gráfico dos históricos de preços.
 ## Cestas de Ativos
@@ -34,17 +38,23 @@ Agora, vamos escolher quatro ativos presentes em cada um dos índices. Vamos exi
 
 A seguir o histórico de preços normalizados de quatro empresas brasileiras: Petrobrás, Vale, Itaúsa e Bradesco. 
 
-<div style="text-align:center"><img src = "brasilian_basket.png" /></div>
+<p align="center">
+<img src = "brasilian_basket.png" />
+</p>
 
 No gráfico abaixo, assim como fizemos para os índices, temos os retornos acumulados e as variâncias para as ações na cesta brasileira.
 
-<div style="text-align:center"><img src = "mean_and_var_brasilian_basket.png" /></div>
+<p align="center">
+<img src = "mean_and_var_brasilian_basket.png" />
+</p>
 
 Primeiramente, podemos observar que ação com maior retorno é a da empresa Vale. É também a que possui maior variância. Esta possui um pico muito expressivo em 2020, provavelmente em virtude da oscilação de preços causada pela pandemia do corona vírus.
 
 Podemos ainda calcular a correlação média entre as ações nas cesta.
 
-<div style="text-align:center"><img src = "corr_br.png" /></div>
+<p align="center">
+<img src = "corr_br.png" />
+</p>
 
 Podemos observar correlações elevadas entre  Banco Bradesco e Itaúsa e entre Vale e Petrobrás. É provável que a correlação deva-se à semelhança entre os negócios.
 
@@ -52,17 +62,23 @@ Podemos observar correlações elevadas entre  Banco Bradesco e Itaúsa e entre 
 
 A seguir o histórico de preços normalizados de quatro empresas estadunidenses: Google, Mycrosoft, Amazon e Coca-Cola. 
 
-<div style="text-align:center"><img src = "usa_basket.png" /></div>
+<p align="center">
+<img src = "usa_basket.png" />
+</p>
 
 No gráfico abaixo, assim como fizemos para os índices, temos os retornos acumulados e as variâncias para as ações na cesta brasileira.
 
-<div style="text-align:center"><img src = "mean_and_var_usa_basket.png" /></div>
+<p align="center">
+<img src = "mean_and_var_usa_basket.png" />
+</p>
 
 Primeiramente, podemos observar que ação com maior retorno é a da empresa Vale. É também a que possui maior variância. Esta possui um pico muito expressivo em 2020, provavelmente em virtude da oscilação de preços causada pela pandemia do corona vírus.
 
 Podemos ainda calcular a correlação média entre as ações nas cesta.
 
-<div style="text-align:center"><img src = "corr_us.png" /></div>
+<p align="center">
+<img src = "corr_us.png" />
+</p>
 
 Podemos observar correlações elevadas entre  Banco Bradesco e Itaúsa e entre Vale e Petrobrás. É provável que a correlação deva-se à semelhança entre os negócios.
 ## Portifólios Otimizados
@@ -76,7 +92,9 @@ onde $r$ é o retorno de um ativo livre de risco, o ativo com $\sigma^2=0$, $\mu
 
 Geralmente utiliza-se a taxa básica de juros so país como ativo livre de risco. No Brasil, a taxa básica é a taxa Selic. No gráfico abaixo, podemos ver a evolução do retorno anual da taxa Selic.
 
-<div style="text-align:center"><img src = "selic_br.png" /></div>
+<p align="center">
+<img src = "selic_br.png" />
+</p>
 
 ## A Fronteira Eficiente e a Curvatura
 
@@ -84,13 +102,17 @@ De posse dos retornos anuais da taxa Selic, podemos obter os respectivos retorno
 
 Utilizando o processo de otimização de Markowitz descrito no apêndice, podemos determinar a fronteira eficiente, que pode ser visualizada na cor preta na imagem abaixo. Incluímos também a data final da janela de tempo utilizada para calcular as médias e a alocação fornecida pelo processo de otimização. os valores negativos representam a operação de venda de ativos.
 
-<div style="text-align:center"><img src = "ef_br.png" /></div>
+<p align="center">
+<img src = "ef_br.png" />
+</p>
 
 O ponto na cor roxa representa o ativo livre de risco, que tem um retorno médio positivo na janela de tempo utilizada (porém pequeno); o ponto na cor preta, sobre a fronteira eficiente representa o portfólio otimizado. Note que este é o ponto da fronteira eficiente cuja a reta que o une ao ativo livre de risco possui a maior inclinação (Sharpe ratio). Observe também, que a fronteira eficiente encapsula todos os ativo que compõem o portfólio.
 
 Abaixo, uma pequena animação da evolução temporal da fronteira eficiente. Também estão marcados os ativos no portfólio, o ativo livre de risco e a alocação ideal $\alpha$.
 
-<div style="text-align:center"><img src = "br_fronteir_anime1.gif" /></div>
+<p align="center">
+<img src = "br_fronteir_anime1.gif" />
+</p>
 
 <!--
 <div style="text-align:center"><video width="320" height="240" controls>
@@ -98,21 +120,29 @@ Abaixo, uma pequena animação da evolução temporal da fronteira eficiente. Ta
 </video></div>
 -->
 
-<div style="text-align:center"><img src = "k1_br_basket.png" /></div>
+<p align="center">
+<img src = "k1_br_basket.png" />
+</p>
 
 Abaixo, temos o valor da curvatura calculado no ponto que representa o portfólio eficiente. Dentre os três casos, este é o que aprensenta maior quantidade de picos pronunciados. E foi sensível em algumas das áreas destacadas.
 
-<div style="text-align:center"><img src = "k2_br_basket.png" /></div>
+<p align="center">
+<img src = "k2_br_basket.png" />
+</p>
 
 Por fim, temos o terceiro caso, quando a fronteira eficiente intercepta o eixo horizontal (retorno nulo). de maneira geral, podemos observar um comportamento semelhante ao primeiro caso, com picos pronunciados apenas nas duas primeiras regiões destacadas.
 
-<div style="text-align:center"><img src = "k3_br_basket.png" /></div>
+<p align="center">
+<img src = "k3_br_basket.png" />
+</p>
 
 ## A Fronteira Eficiente e a Curvatura (cesta americana)
 
 Para a cesta de ativos americana, vamos utilizar como ativo livre de risco, a taxa de juros estipulada pelo Federal Reserve (FED). Disponível [neste link](https://www.federalreserve.gov/datadownload/Download.aspx?rel=PRATES&series=c27939ee810cb2e929a920a6bd77d9f6&filetype=csv&label=include&layout=seriescolumn&from=01/01/2008&to=05/31/2022). Nessa fonte, temos dados disponíveis a partir de 28/10/2008.
 
-<div style="text-align:center"><img src = "abond_us.png" /></div>
+<p align="center">
+<img src = "abond_us.png" />
+</p>
 
 ## A Fronteira Eficiente e a Curvatura
 
@@ -120,13 +150,17 @@ De posse dos retornos anuais da taxa do FED, podemos obter os respectivos retorn
 
 Utilizando o processo de otimização de Markowitz descrito no apêndice, podemos determinar a fronteira eficiente, que pode ser visualizada na cor preta na imagem abaixo. Incluímos também a data final da janela de tempo utilizada para calcular as médias e a alocação fornecida pelo processo de otimização. Os valores negativos da alocação representam a operações de venda dos respectivos ativos.
 
-<div style="text-align:center"><img src = "ef_us.png" /></div>
+<p align="center">
+<img src = "ef_us.png" />
+</p>
 
 O ponto na cor roxa representa o ativo livre de risco, que tem um retorno médio positivo na janela de tempo utilizada (Apesar de não ficar claro na figura, o retorno do ativo livre de risco americano é nominalmente menor que o retorno do ativo livre de risco brasileiro); o ponto na cor preta, sobre a fronteira eficiente representa o portfólio otimizado. Note que este é o ponto da fronteira eficiente cuja a reta que o une ao ativo livre de risco possui a maior inclinação (Sharpe ratio). Observe também, que a fronteira eficiente encapsula todos os ativo que compõem o portfólio.
 
 Abaixo, uma pequena animação da evolução temporal da fronteira eficiente. Também estão marcados os ativos no portfólio, o ativo livre de risco e a alocação ideal $\alpha$.
 
-<div style="text-align:center"><img src = "us_fronteir_anime1.gif" /></div>
+<p align="center">
+<img src = "us_fronteir_anime1.gif" />
+</p>
 
 <!--
 <div style="text-align:center"><video width="320" height="240" controls>
@@ -134,15 +168,21 @@ Abaixo, uma pequena animação da evolução temporal da fronteira eficiente. Ta
 </video></div>
 -->
 
-<div style="text-align:center"><img src = "k1_us_basket.png" /></div>
+<p align="center">
+<img src = "k1_us_basket.png" />
+</p>
 
 Abaixo, temos o valor da curvatura calculado no ponto que representa o portfólio eficiente. Dentre os três casos, este é o que aprensenta maior quantidade de picos pronunciados. E foi sensível em algumas das áreas destacadas.
 
-<div style="text-align:center"><img src = "k2_us_basket.png" /></div>
+<p align="center">
+<img src = "k2_us_basket.png" />
+</p>
 
 Por fim, temos o terceiro caso, quando a fronteira eficiente intercepta o eixo horizontal (retorno nulo). de maneira geral, podemos observar um comportamento semelhante ao primeiro caso, com picos pronunciados apenas nas duas primeiras regiões destacadas.
 
-<div style="text-align:center"><img src = "k3_us_basket.png" /></div>
+<p align="center">
+<img src = "k3_us_basket.png" />
+</p>
 
 ## Apêndice A: Otimização de Portifólios de Markowitz
 Um portfólio é definido através de um conjunto de ativos $A_1, A_2, ... , A_N$ e a respectiva alocação (percentual) $\alpha_1, \alpha_2, ... , \alpha_N$. Desse modo, $\alpha_1 + \alpha_2 + \cdots + \alpha_N = 1$.
@@ -159,7 +199,11 @@ $$ \sigma^2 = \vec{\alpha}^t \Sigma \vec{\alpha},$$
 
 onde $\Sigma$ é a **matriz de correlação** entre os ativos (nessa notação, a alocação $\vec{\alpha}$ é vista como um vetor coluna e $\vec{\alpha}^t$ o seu transposto, um vetor linha). Ela é dada por
 
-$$ \Sigma = \begin{pmatrix}\sigma_1^2 & \rho_{12} & \cdots & \rho_{1N} \\ \rho_{12} & \sigma_2^2 & \cdots & \rho_{2N} \\ \vdots & \vdots & \ddots & \vdots \\ \rho_{1N} & \rho_{2N} & \cdots & \sigma_N^2  \end{pmatrix}. $$
+<!-- $$ \Sigma = \begin{pmatrix}\sigma_1^2 & \rho_{12} & \cdots & \rho_{1N} \\ \rho_{12} & \sigma_2^2 & \cdots & \rho_{2N} \\ \vdots & \vdots & \ddots & \vdots \\ \rho_{1N} & \rho_{2N} & \cdots & \sigma_N^2  \end{pmatrix}. $$ -->
+
+<p align="center">
+<img src = 'equation0.png' />
+</p>
 
 Os elementos na diagonal principal de $\Sigma$ são as variâncias dos ativos $(\sigma_i^2)$. Já os termos fora da diagonal $(\rho_{ij})$ representam correlações entre os ativos. Por exemplo, suponha que o preço do ativo $A_1$ sobe, se o preço do ativo $A_2$ também sobe, eles têm **correlação positiva** $(\rho_{12}>0)$, ao passo que se o preço ativo $A_2$ cai, eles têm **correlação negativa** $(\rho_{12}<0)$. 
 
@@ -210,7 +254,7 @@ Note que se conhecemos $\alpha$ podemos obter a variância do portifólio, $\sig
 
 que por sua vez podem ser expressos em função do retorno fixado, $\mu_0$,
 
-<! --$$ \sigma^2 = \begin{pmatrix} \mu_0 & 1 \end{pmatrix} \begin{pmatrix} \vec{\mu}^t \Sigma^{-1} \mu & \vec{\mu}^t \Sigma^{-1} \vec{1} \\  \vec{\mu}^t \Sigma^{-1} \vec{1} & \vec{1}^t \Sigma^{-1} \vec{1} \end{pmatrix}^{-1} \begin{pmatrix} \mu_0 \\ 1 \end{pmatrix}. $$ -->
+<!-- $$ \sigma^2 = \begin{pmatrix} \mu_0 & 1 \end{pmatrix} \begin{pmatrix} \vec{\mu}^t \Sigma^{-1} \mu & \vec{\mu}^t \Sigma^{-1} \vec{1} \\  \vec{\mu}^t \Sigma^{-1} \vec{1} & \vec{1}^t \Sigma^{-1} \vec{1} \end{pmatrix}^{-1} \begin{pmatrix} \mu_0 \\ 1 \end{pmatrix}. $$ -->
 
 <p align="center">
 <img src = "equation3.png" />
@@ -230,7 +274,11 @@ $$ \mu^\prime=\frac{\mu-r}{\sigma}\quad\textrm{ com }\quad\sigma^2=a\mu^2+b\mu+c
 
 Derivando implicitamente a equação da fronteira eficiente, conseguimos encontrar uma expressão para $\mu^\prime$, e obter duas equações para podermos encontrar o retorno e o desvio padrão do ativo otimizado
 
-$$ \begin{cases} \sigma^2 = a\mu^2+b\mu+c \\ 2\sigma^2 = 2a\mu^2+ \left(b-2ra\right)\mu-rb \end{cases}. $$
+<!-- $$ \begin{cases} \sigma^2 = a\mu^2+b\mu+c \\ 2\sigma^2 = 2a\mu^2+ \left(b-2ra\right)\mu-rb \end{cases}. $$ -->
+
+<p align="center">
+<img src = "equation4.png" />
+</p>
 
 Resolvendo as equações, encontramos o retorno e a variância do ativo otimizado
 
@@ -244,7 +292,11 @@ $$\sigma^2=a\mu^2+b\mu+c,\textrm{com }a>0.$$
 
 Para obter a curvatura dessa curva, primeiro devemos obter uma **parametrização** da mesma. Ou seja, duas funções de um mesmo parâmetro, $t$, que fornecem um ponto da curva, $\left(\mu\left(t\right),\sigma\left(t\right)\right)$. Utilizando as funções trigonométricas, podemos definir
 
-$$\begin{cases} \mu(t) =\sqrt{\frac{c}{a} - \frac{b^2}{4a^2}}\sinh (t)-\frac{b}{2a} \\ \sigma(t)=\sqrt{c-\frac{b^2}{4a}}\cosh(t) \end{cases}.$$
+<!-- $$\begin{cases} \mu(t) =\sqrt{\frac{c}{a} - \frac{b^2}{4a^2}}\sinh (t)-\frac{b}{2a} \\ \sigma(t)=\sqrt{c-\frac{b^2}{4a}}\cosh(t) \end{cases}.$$ -->
+
+<p align="center">
+<img src = "equation5.png" />
+</p>
 
 Sabendo que $\cosh^2(t)-\sinh^2(t)=1$, a equação da fronteira eficiente é naturalmente satisfeita. Temos portanto uma parametrização.
 
@@ -262,11 +314,11 @@ O primeiro ponto de interesse para calcularmos a curvatura, é o um dos vértice
 
 $$k(0)=\frac{a}{\sqrt{c-\frac{b^2}{4a}}}.$$
 
-Podemos ainda expressar a curvatura geral em termos de $\mu$ e $\sigma$
+Vamos nos referir a ela como $k_1(\mu, \sigma)$. Podemos ainda expressar a curvatura geral em termos de $\mu$ e $\sigma$
 
 $$k(\mu,\sigma)=\frac{ac-\frac{b^2}{4}}{\left(\sigma^2+\left(a\mu+\frac{b}{2}\right)^2\right)^{\frac{3}{2}}}.$$
-Isto nos permitirá calcular a curvatura no ponto que representa o portfólio eficiente.
+Isto nos permitirá calcular a curvatura no ponto que representa o portfólio eficiente. Vamos nos referir a ela como $k_2(\mu, \sigma)$.
 
 Por fim, podemos nos perguntar como é a curvatura no ponto em que a fronteira eficiente intercepta o eixo das abscissas. Isto é, quando $\mu(t)=0$. Isto nos permite obter o respectivo valor de $t$ e, em seguida, a variância desse ponto:
 $$\sigma^2=\frac{4ac+b^2}{4a}.$$
-E assim, conseguimos obter a curvatura da hipérbole nesse ponto.
+E assim, conseguimos obter a curvatura da hipérbole nesse ponto. Vamos nos referir a ela como $k_3(\mu, \sigma)$.
